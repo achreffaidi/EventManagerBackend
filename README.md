@@ -1,5 +1,9 @@
 # Event Manager Backend
 
+You can edit the ReadMe.md file  using this [link](https://www.makeareadme.com/).
+Update this file whenever you change something in the API.
+
+
 # End point 
 
  For local host 
