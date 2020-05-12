@@ -1,5 +1,7 @@
 # Event Manager Backend
 
+ You can edit this file from this [link](https://www.makeareadme.com/).
+
 # End point 
 
  For local host 
@@ -287,18 +289,13 @@ PUT /event/staff
 
 
 ```javascript
-{
-      "id":"",
-      "name":"",
-      "event":"" ,
-      "description":"",
-      "options": "",
-      "cost": "",
-      "color":""
+ {
+      "id": "",
+      "permissions":[1,2,5]
     }
 ```
 
-The `id` attribute contains the `id` of the Plan .
+The `id` attribute contains the `id` of Staff .
 The `event` attribute contains the `id` of the event associated to the Plan.
 
 ## Delete Plan
@@ -316,7 +313,7 @@ DELETE /event/staff
 
 # Status Codes
 
-Gophish returns the following status codes in its API:
+EventManager returns the following status codes in its API:
 
 | Status Code | Description |
 | :--- | :--- |
@@ -325,3 +322,12 @@ Gophish returns the following status codes in its API:
 | 400 | `BAD REQUEST` |
 | 404 | `NOT FOUND` |
 | 500 | `INTERNAL SERVER ERROR` |
+
+
+
+
+
+
+
+
+
