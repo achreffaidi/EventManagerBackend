@@ -79,7 +79,7 @@ The `admin` attribute contains the `id` of the user who created the event.
 
 end point 
 ```http
-Get /plan
+GET /plan
 ```
 | headers  | value |
 | :---  | :--- |
