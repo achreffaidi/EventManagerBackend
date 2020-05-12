@@ -10,8 +10,8 @@ router.get('/', function (req, res) {
 });
 // Import contact controller
 var contactController = require('./Controllers/contactController');
-var userController = require('./Controllers/userController');
-var eventController = require('./Controllers/eventController');
+var userController = require('./Controllers/UserController');
+var eventController = require('./Controllers/EventController');
 var planController = require('./Controllers/planController');
 var requestController = require('./Controllers/requestController');
 var eventImageController = require('./Controllers/EventImageController');
