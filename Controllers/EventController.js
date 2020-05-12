@@ -11,7 +11,7 @@ exports.index =    function (req, res) {
                 status: "error",
                 message: err,
             });
-        }
+        }else
        res.json({
            status: "success",
            message: "Events retrieved successfully",

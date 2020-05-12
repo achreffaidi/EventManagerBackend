@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 // Connect to Mongoose and set connection variable
-mongoose.connect('mongodb://localhost/clubs', { useNewUrlParser: true});
+mongoose.connect('mongodb+srv://achreffaidi:55729126@cluster0-cyciz.gcp.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true});
 var db = mongoose.connection;
 
 // Added check for DB connection

@@ -25,11 +25,7 @@ router.route('/users')
 
 router.route('/users/:user_id')
     .get(userController.view)
-    .patch(userController.update)
-    .put(userController.update)
-    .delete(userController.delete);
-router.route('/users/:user_id/events')
-    .get(userController.events);
+
 
 router.route('/events')
     .get(eventController.index)
@@ -46,6 +42,8 @@ router.route('/events/:event_id')
 router.route('/contacts')
     .get(contactController.index)
     .post(contactController.new);
+
+
 router.route('/contacts/:contact_id')
     .get(contactController.view)
     .patch(contactController.update)
@@ -75,6 +73,8 @@ router.route('/event/staff')
     .get(staffController.index)
 router.route('/event/staff')
     .post(staffController.new)
+
+
 
 
 // Export API routes

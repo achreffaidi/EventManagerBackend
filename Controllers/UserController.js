@@ -24,6 +24,7 @@ exports.new = function (req, res) {
     var user = new User();
     user.name = req.body.name ? req.body.name : user.name ;
     user.password  = req.body.password ? req.body.password : user.password ;
+    user.email  = req.body.email
 // save the contact and check for errors
     user.save(function (err) {
         if (err)
@@ -46,52 +47,3 @@ exports.view = function (req, res) {
         });
     });
 };
-// Handle update contact info
-exports.update = function (req, res) {
-    User.findById(req.params.user_id, function (err, user) {
-        if (err)
-            res.send(err);
-        user.name = req.body.name ? req.body.name : user.name;
-        user.password = req.body.password;
-// save the contact and check for errors
-        user.save(function (err) {
-            if (err)
-                res.json(err);
-            res.json({
-                message: 'Contact Info updated',
-                data: user
-            });
-        });
-    });
-};
-// Handle delete contact
-exports.delete = function (req, res) {
-    User.remove({
-        _id: req.params.user_id
-    }, function (err, user) {
-        if (err)
-            res.send(err);
-        res.json({
-            status: "success",
-            message: 'User deleted'
-        });
-    });
-};
-exports.events = function (req, res) {
-
-    User.findById(req.params.user_id, function (err, user) {
-        if (err)
-            res.send(err);
-        Events.find({admin:user._id},function (err , events) {
-            if(err)
-                res.send(err);
-            res.json({
-                message: 'User details loading..',
-                data: events
-            });
-        })
-
-    });
-
-};
-
