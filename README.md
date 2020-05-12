@@ -1,9 +1,5 @@
 # Event Manager Backend
 
-You can edit the ReadMe.md file  using this [link](https://www.makeareadme.com/).
-Update this file whenever you change something in the API.
-
-
 # End point 
 
  For local host 
@@ -79,11 +75,11 @@ The `admin` attribute contains the `id` of the user who created the event.
 
 # Plan ( Offer )
 
-## Get all  Plans for a Event
+## Get all  Plans for an Event
 
 end point 
 ```http
-GET /plan
+Get /plan
 ```
 | headers  | value |
 | :---  | :--- |
@@ -179,6 +175,141 @@ DELETE /plan
 | :---  | :--- |
 | `id`  | the `id` of the Plan |
 
+
+
+# Staff 
+
+## Get all  Staffs 
+
+end point 
+```http
+Get /staff
+```
+
+ Response example
+
+
+```javascript
+{
+    "status": "success",
+    "message": "Staff retrieved successfully",
+    "data": [
+        {
+            "permissions": [
+                2,
+                3
+            ],
+            "_id": "5eba114a7aaef4164cf583a4",
+            "user": "5eb9d8ea6f813a3970e9ad65",
+            "event": "5eb9d9a86f813a3970e9ad68",
+            "createdAt": "2020-05-12T03:00:26.082Z",
+            "updatedAt": "2020-05-12T14:57:24.785Z",
+            "__v": 2
+        },
+  
+    ]
+}
+```
+
+## Get all  Staffs for an Event
+
+end point 
+```http
+Get /event/staff
+```
+| headers  | value |
+| :---  | :--- |
+| `event`  | the `id` of the event |
+
+ Response example
+
+
+```javascript
+{
+    "staffs": [
+        {
+            "id": "5eba114a7aaef4164cf583a4",
+            "permissions": [
+                0,
+                1,
+                2
+            ],
+            "user": {
+                "_id": "5eb9d8ea6f813a3970e9ad65",
+                "name": "ahmed",
+                "password": "ahmed",
+                "email": "ahmed@gmail.com",
+                "__v": 0
+            }
+        },
+    ]
+}
+```
+
+
+## Create Staff
+
+end point 
+```http
+POST /plan
+```
+| headers  | value |
+| :---  | :--- |
+| `Content-Type`  | `application/json` |
+
+ body example
+
+
+```javascript
+{
+      "email": "",
+      "event":"",
+      "permissions":[1,5,8,9]
+    }
+```
+
+
+The `email` attribute contains the `email` of the user  and The `event` attribute contains the `id` of the event.
+The `permissions` attribute contains the list indexs of permissions allowed for a stuff.
+//todo : add example 
+
+## update Staff
+
+end point 
+```http
+PUT /event/staff
+```
+| headers  | value |
+| :---  | :--- |
+| `Content-Type`  | `application/json` |
+
+ body example
+
+
+```javascript
+{
+      "id":"",
+      "name":"",
+      "event":"" ,
+      "description":"",
+      "options": "",
+      "cost": "",
+      "color":""
+    }
+```
+
+The `id` attribute contains the `id` of the Plan .
+The `event` attribute contains the `id` of the event associated to the Plan.
+
+## Delete Plan
+
+end point 
+```http
+DELETE /event/staff
+```
+| headers  | value |
+| :---  | :--- |
+| `id`  | the `id` of the Staff|
 
 
 
