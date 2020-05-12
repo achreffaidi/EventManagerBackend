@@ -69,10 +69,19 @@ router.route('/event/image')
     .get(eventImageController.view)
 
 
-router.route('/event/staff')
+router.route('/staff')
     .get(staffController.index)
 router.route('/event/staff')
     .post(staffController.new)
+router.route('/event/staff')
+    .get(staffController.getStaffByEvent)
+router.route('/event/staff')
+    .put(staffController.update)
+router.route('/event/staff')
+    .delete(staffController.delete)
+router.route('/event/staff/permissions')
+    .get(staffController.getPermissions)
+
 
 
 
