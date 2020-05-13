@@ -21,6 +21,8 @@ exports.index = function (req, res) {
 };
 // Handle create contact actions
 exports.new = function (req, res) {
+
+
     var user = new User();
     user.name = req.body.name ? req.body.name : user.name ;
     user.password  = req.body.password ? req.body.password : user.password ;
@@ -36,6 +38,8 @@ exports.new = function (req, res) {
         });
     });
 };
+
+
 // Handle view contact info
 exports.view = function (req, res) {
     User.findById(req.params.user_id, function (err, user) {
