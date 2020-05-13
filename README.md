@@ -535,20 +535,13 @@ GET /event/presence
 
 ```json
 {
-    "message": "Event_Counting details loading..",
+    "message": "Event_Counting Info updated",
     "data": [
         {
-            "state": false,
-            "presence_list": [
-                "5ebc2d6265d9853364c4f305",
-                "5ebc2e24289f870a1c385ffa"
-            ],
-            "_id": "5ebc26592efff4311c42b34c",
-            "name": "Morning Presence",
-            "event": "5eb9d9a86f813a3970e9ad68",
-            "createdAt": "2020-05-13T16:54:49.298Z",
-            "updatedAt": "2020-05-13T17:28:04.834Z",
-            "__v": 2
+            "id": "5ebc26592efff4311c42b34c",
+            "name": "testing name",
+            "count_in": 2,
+            "count_out": 2
         }
     ]
 }
@@ -570,19 +563,24 @@ GET /presence
 ```json
 {
     "message": "Event_Counting details loading..",
-    "data": {
-        "state": false,
-        "presence_list": [
-            "5ebc2d6265d9853364c4f305",
-            "5ebc2e24289f870a1c385ffa"
-        ],
-        "_id": "5ebc26592efff4311c42b34c",
-        "name": "testing name",
-        "event": "5eb9d9a86f813a3970e9ad68",
-        "createdAt": "2020-05-13T16:54:49.298Z",
-        "updatedAt": "2020-05-13T17:43:46.390Z",
-        "__v": 2
-    }
+    "list_in": [
+        {
+            "_id": "5eb9d8ea6f813a3970e9ad65",
+            "name": "ahmed",
+            "password": "ahmed",
+            "email": "ahmed@gmail.com",
+            "__v": 0
+        },
+    ],
+    "list_out": [
+        {
+            "_id": "5eb9d8ea6f813a3970e9ad65",
+            "name": "ahmed",
+            "password": "ahmed",
+            "email": "ahmed@gmail.com",
+            "__v": 0
+        },
+    ]
 }
 ```
 
