@@ -26,7 +26,8 @@ exports.new = function (req, res) {
     var user = new User();
     user.name = req.body.name ? req.body.name : user.name ;
     user.password  = req.body.password ? req.body.password : user.password ;
-    user.email  = req.body.email
+    user.email  = req.body.email;
+    user.number=req.body.number;
 // save the contact and check for errors
     user.save(function (err) {
         if (err)
