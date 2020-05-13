@@ -12,7 +12,11 @@ const userModel = mongoose.Schema({
     password : {
         type: String,
         required: true
-    }}
+    },
+        number : {
+            type: String,
+            required: true
+        }}
     );
 
 
