@@ -1,10 +1,9 @@
 // contactController.js
 // Import contact model
-Events = require('../Models/eventsModel');
+const Event = require('../Models/eventsModel');
 const User = require('../Models/UserModel');
 const EventCounting = require('../Models/EventCountingModel')
 const Presence = require('../Models/PresenceModel')
-
 
 exports.index =    function (req, res) {
     EventCounting.get(function (err, event_counting) {
@@ -56,6 +55,18 @@ exports.new = function (req, res) {
 };
 
 
+exports.getEventCountingList = function(req , res){
+
+    EventCounting.find({event : req.headers.event}, function (err, event_counting) {
+        if (err)
+            res.send(err);
+        res.json({
+            message: 'Event_Counting details loading..',
+            data: event_counting
+        });
+    });
+
+}
 
 exports.getEventCountingById = function (req, res) {
     EventCounting.findById(req.headers.id, function (err, event_counting) {
@@ -98,6 +109,7 @@ exports.addPresence = function(req,res){
            User.findById(req.body.user , function(err,user){
 
                if(err){
+                   console.log(err);
                    res.send(err);
                }else if(!user){
                    res.writeHead(404);
@@ -107,17 +119,26 @@ exports.addPresence = function(req,res){
                    presence.user = user.id;
                    presence.save(function (err) {
                        if(err){
+                           console.log(err);
                            res.send(err);
                        }else{
-                           event_counting.presence_list = event_counting.presence_list.push(presence.id);
+                           let list = event_counting.presence_list ;
+                           list.push(presence._id) ;
+                           event_counting.presence_list = list;
+                           console.log(event_counting);
+
                            event_counting.save(function (err) {
                                if(err){
+                                   console.log(err);
                                    res.send(err);
                                } else{
                                    res.json(
                                        {
                                            message:"Presence add Successfullt" ,
-                                           date : event_counting
+                                           date : {
+                                               name : user.name,
+                                               event_counting : event_counting
+                                           }
                                        }
 
                                    )
@@ -125,19 +146,10 @@ exports.addPresence = function(req,res){
 
                            })
                        }
-
                    })
-
-
                }
-
            });
-
-
-
        }
-
-
 
     });
 

@@ -81,11 +81,11 @@ router.route('/event/request')
 
 
 router.route('/presence')
-    .get(eventCountingController.index)
+    .get(eventCountingController.getEventCountingById)
 router.route('/event/presence')
     .post(eventCountingController.new)
 router.route('/event/presence')
-    .get(eventCountingController.getEventCountingById)
+    .get(eventCountingController.getEventCountingList)
 router.route('/event/presence')
     .put(eventCountingController.update)
 router.route('/event/presence')
