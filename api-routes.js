@@ -16,6 +16,7 @@ var planController = require('./Controllers/planController');
 var requestController = require('./Controllers/requestController');
 var eventImageController = require('./Controllers/EventImageController');
 var staffController = require('./Controllers/StaffController');
+var eventCountingController = require('./Controllers/EventCountingController')
 // Contact routes
 
 
@@ -79,6 +80,18 @@ router.route('/event/request')
 
 
 
+router.route('/presence')
+    .get(eventCountingController.index)
+router.route('/event/presence')
+    .post(eventCountingController.new)
+router.route('/event/presence')
+    .get(eventCountingController.getEventCountingById)
+router.route('/event/presence')
+    .put(eventCountingController.update)
+router.route('/event/presence')
+    .delete(eventCountingController.delete)
+router.route('/event/presence/user')
+    .post(eventCountingController.addPresence)
 
 // Export API routes
 module.exports = router;
