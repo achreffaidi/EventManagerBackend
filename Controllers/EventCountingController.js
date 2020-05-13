@@ -4,6 +4,7 @@ const Event = require('../Models/eventsModel');
 const User = require('../Models/UserModel');
 const EventCounting = require('../Models/EventCountingModel')
 const Presence = require('../Models/PresenceModel')
+const Request = require('../Models/RequestModel')
 
 exports.index =    function (req, res) {
     EventCounting.get(function (err, event_counting) {
@@ -39,6 +40,7 @@ exports.new = function (req, res) {
         event_counting.name = req.body.name ;
         event_counting.event  = req.body.event ;
 
+
         event_counting.save(function (err) {
             if (err)
                 res.json(err);
@@ -57,26 +59,181 @@ exports.new = function (req, res) {
 
 exports.getEventCountingList = function(req , res){
 
+
     EventCounting.find({event : req.headers.event}, function (err, event_counting) {
         if (err)
             res.send(err);
-        res.json({
-            message: 'Event_Counting details loading..',
-            data: event_counting
-        });
+        else {
+            let total = 0 ;
+            let c = 0 ;
+            event_counting.forEach(function(event){
+                total+= event.presence_list.length ;
+
+                let count =0 ;
+                let list = [];
+                let list_in = []
+                let list_out =[]
+                Request.find({event:event.event ,state : 2},function (err,requests) {
+                    if(err){
+                        res.send(err);
+                    }else if(!requests){
+                        res.writeHead(404);
+                        res.end("Can't Find users");
+                    }else{
+
+
+                        event.presence_list.forEach(function(id){
+                            Presence.findById(id,function (err,presence) {
+                                if(err){
+                                    res.send(err) ;
+                                }else if(!presence){
+                                    res.writeHead(404);
+                                    res.end("Can't Find presence :"+id);
+                                }else{
+                                    list_in.push(presence.user);
+
+                                    count++ ;
+
+                                    if(count===event.presence_list.length){
+                                        requests.forEach(function(request){
+                                            if(!list_in.includes(request.user)){
+                                                list_out.push(request.user);
+                                            }
+                                        });
+
+                                        list.push({
+                                            id:event.id,
+                                            name:event.name,
+                                            count_in:list_in.length,
+                                            count_out:list_out.length,
+                                        });
+                                        c+=list_in.length
+
+
+                                        if(total===c){
+
+                                            res.json({
+                                                message: 'Event_Counting Info updated',
+                                                data: list
+                                            });
+
+                                        }
+
+
+                                    }
+                                }
+                            })
+                        });
+                    }
+                });
+
+            });
+        }
+
+
     });
 
 }
 
 exports.getEventCountingById = function (req, res) {
+
     EventCounting.findById(req.headers.id, function (err, event_counting) {
         if (err)
             res.send(err);
-        res.json({
-            message: 'Event_Counting details loading..',
-            data: event_counting
-        });
+
+
+        let count =0 ;
+        let list  = [];
+        let list_in = []
+        let list_out =[]
+        Request.find({event:event_counting.event ,state : 2},function (err,requests) {
+            if(err){
+                res.send(err);
+            }else if(!requests){
+                res.writeHead(404);
+                res.end("Can't Find users");
+            }else{
+
+
+
+                event_counting.presence_list.forEach(function(id){
+                    Presence.findById(id,function (err,presence) {
+                        if(err){
+                            res.send(err) ;
+                        }else if(!presence){
+                            res.writeHead(404);
+                            res.end("Can't Find presence :"+id);
+                        }else{
+                           list_in.push(presence.user);
+                           count++ ;
+                           if(count===event_counting.presence_list.length){
+                               requests.forEach(function(request){
+                                   if(!list_in.includes(request.user)){
+                                       list_out.push(request.user);
+                                   }
+                               });
+                               let total = list_in.length + list_out.length ;
+
+                               let list_in_user =[];
+                               let list_out_user =[];
+                               count =0;
+                               list_in.forEach(function(x){
+                                   User.findById(x, function(err,user){
+
+                                       if(err){
+                                           res.send(err);
+                                       }else if(!user){
+                                           res.writeHead(404);
+                                           res.end("Can't Find user :"+presence.user);
+                                       }else{
+                                           list_in_user.push(user);
+                                           count++ ;
+                                           if(count=== total ){
+                                               res.json({
+                                                   message: 'Event_Counting details loading..',
+                                                   list_in: list_in_user,
+                                                   list_out: list_out_user
+                                               });
+                                           }
+                                       }
+
+
+
+
+                                   });
+                               });
+                               list_out.forEach(function(x){
+                                   User.findById(x, function(err,user){
+
+                                       if(err){
+                                           res.send(err);
+                                       }else if(!user){
+                                           res.writeHead(404);
+                                           res.end("Can't Find user :"+presence.user);
+                                       }else{
+                                           list_out_user.push(user);
+                                           count++ ;
+                                           if(count=== total ){
+                                               res.json({
+                                                   message: 'Event_Counting details loading..',
+                                                   list_in: list_in_user,
+                                                   list_out: list_out_user
+                                               });
+                                           }
+                                       }
+                                   });
+                               });
+
+                           }
+                        }
+                    })
+                });
+            }
+                });
     });
+
+
+
 };
 
 
