@@ -63,7 +63,7 @@ exports.update = function (req, res) {
         events.name = req.body.name ? req.body.name : events.name;
         events.admin = req.body.admin;
 // save the contact and check for errors
-        Events.save(function (err) {
+        events.save(function (err) {
             if (err)
                 res.json(err);
             res.json({
@@ -76,7 +76,7 @@ exports.update = function (req, res) {
 // Handle delete contact
 exports.delete = function (req, res) {
     Events.remove({
-        _id: req.params.events_id
+        _id: req.params.id
     }, function (err, events) {
         if (err)
             res.send(err);
