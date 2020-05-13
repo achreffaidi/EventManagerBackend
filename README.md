@@ -27,7 +27,7 @@ GET /event
  Response example
 
 
-```javascript
+```json
 {
     "status": "success",
     "message": "Events retrieved successfully",
@@ -43,7 +43,7 @@ GET /event
             "createdAt": "2020-05-11T23:03:04.665Z",
             "updatedAt": "2020-05-11T23:03:04.665Z",
             "__v": 0
-        },
+        }
         
     ]
 }
@@ -61,19 +61,67 @@ POST /event
  body example
 
 
-```javascript
+```json
 {
      "name" : "" ,
      "admin"  : "" ,
      "start_date" : "" ,
      "end_date" : "" ,
      "description" : "" ,
-     "location" : "" ,
+     "location" : "" 
 }
 ```
 
 
 The `admin` attribute contains the `id` of the user who created the event.
+
+# Users
+
+
+## Get all users
+
+end point.
+```http
+GET /users
+```
+Response example :
+```json
+{
+    "status": "success",
+    "message": "User retrieved successfully",
+    "data": [
+        {
+            "_id": "5eb9d8ea6f813a3970e9ad65",
+            "name": "ahmed",
+            "password": "ahmed",
+            "email": "ahmed@gmail.com",
+            "__v": 0
+        }
+        
+    ]
+}
+```
+
+## Add a new user
+end .point
+```http
+POST /users
+```
+| headers  | value |
+| :---  | :--- |
+| `Content-Type`  | `application/json` |
+
+ body example
+
+
+```json
+{
+     "name" : "" ,
+     "email"  : "" ,
+     "password" : "" ,
+     "number" : "" 
+    }
+```
 
 # Plan ( Offer )
 
@@ -90,7 +138,7 @@ Get /plan
  Response example
 
 
-```javascript
+```json
 {
     "plans": [
         {
@@ -107,7 +155,7 @@ Get /plan
             "createdAt": "2020-05-11T23:06:32.854Z",
             "updatedAt": "2020-05-11T23:16:56.688Z",
             "__v": 0
-        },
+        }
     ]
 }
 ```
@@ -125,7 +173,7 @@ POST /plan
  body example
 
 
-```javascript
+```json
 {
       "name":"",
       "event":"" ,
@@ -152,7 +200,7 @@ PUT /plan
  body example
 
 
-```javascript
+```json
 {
       "id":"",
       "name":"",
@@ -179,7 +227,6 @@ DELETE /plan
 | `id`  | the `id` of the Plan |
 
 
-
 # Staff 
 
 ## Get all  Staffs 
@@ -192,7 +239,7 @@ Get /staff
  Response example
 
 
-```javascript
+```json
 {
     "status": "success",
     "message": "Staff retrieved successfully",
@@ -208,7 +255,7 @@ Get /staff
             "createdAt": "2020-05-12T03:00:26.082Z",
             "updatedAt": "2020-05-12T14:57:24.785Z",
             "__v": 2
-        },
+        }
   
     ]
 }
@@ -227,7 +274,7 @@ Get /event/staff
  Response example
 
 
-```javascript
+```json
 {
     "staffs": [
         {
@@ -244,7 +291,7 @@ Get /event/staff
                 "email": "ahmed@gmail.com",
                 "__v": 0
             }
-        },
+        }
     ]
 }
 ```
@@ -263,7 +310,7 @@ POST /plan
  body example
 
 
-```javascript
+```json
 {
       "email": "",
       "event":"",
@@ -290,7 +337,7 @@ PUT /event/staff
  body example
 
 
-```javascript
+```json
  {
       "id": "",
       "permissions":[1,2,5]
@@ -322,7 +369,7 @@ GET /event/staff/permissions
  Response example
 
 
-```javascript
+```json
 {
     "permissions": [
         "permission 1",
@@ -359,7 +406,7 @@ Get /event/request
  Response example
 
 
-```javascript
+```json
 {
     "requests": [
         {
@@ -396,7 +443,7 @@ Get /event/request
                 "updatedAt": "2020-05-11T23:08:39.745Z",
                 "__v": 0
             }
-        },
+        }
        
     ]
 }
@@ -416,7 +463,7 @@ POST /event/request
  body example
 
 
-```javascript
+```json
 {
   "user":"",
   "event":"" ,
@@ -448,7 +495,7 @@ PUT /event/request
  body example
 
 
-```javascript
+```json
  {
       "id": "",
       "state":2
@@ -468,37 +515,83 @@ DELETE /event/request
 | :---  | :--- |
 | `id`  | the `id` of the Request|
 
-# Users
+# Event Counting 
+
+> Counting workshop's presence for example
 
 
-## Get all users
+## Get all  Event_Counting for an Event
 
-end point.
+end point 
 ```http
-GET /users
+GET /event/presence
 ```
-Response example :
-```javascript
+| headers  | value |
+| :---  | :--- |
+| `event`  | the `id` of the event |
+
+ Response example
+
+
+```json
 {
-    "status": "success",
-    "message": "User retrieved successfully",
+    "message": "Event_Counting details loading..",
     "data": [
         {
-            "_id": "5eb9d8ea6f813a3970e9ad65",
-            "name": "ahmed",
-            "password": "ahmed",
-            "email": "ahmed@gmail.com",
-            "__v": 0
-        },
-        
+            "state": false,
+            "presence_list": [
+                "5ebc2d6265d9853364c4f305",
+                "5ebc2e24289f870a1c385ffa"
+            ],
+            "_id": "5ebc26592efff4311c42b34c",
+            "name": "Morning Presence",
+            "event": "5eb9d9a86f813a3970e9ad68",
+            "createdAt": "2020-05-13T16:54:49.298Z",
+            "updatedAt": "2020-05-13T17:28:04.834Z",
+            "__v": 2
+        }
     ]
 }
 ```
 
-## Add a new user
-end .point
+## Get a Single Event_Counting By Id
+
+end point 
 ```http
-POST /users
+GET /presence
+```
+| headers  | value |
+| :---  | :--- |
+| `id`  | the `id` of the Event_Counting |
+
+ Response example
+
+
+```json
+{
+    "message": "Event_Counting details loading..",
+    "data": {
+        "state": false,
+        "presence_list": [
+            "5ebc2d6265d9853364c4f305",
+            "5ebc2e24289f870a1c385ffa"
+        ],
+        "_id": "5ebc26592efff4311c42b34c",
+        "name": "testing name",
+        "event": "5eb9d9a86f813a3970e9ad68",
+        "createdAt": "2020-05-13T16:54:49.298Z",
+        "updatedAt": "2020-05-13T17:43:46.390Z",
+        "__v": 2
+    }
+}
+```
+
+
+## Create Event_Counting
+
+end point 
+```http
+POST /event/presence
 ```
 | headers  | value |
 | :---  | :--- |
@@ -507,14 +600,77 @@ POST /users
  body example
 
 
-```javascript
+```json
 {
-     "name" : "" ,
-     "email"  : "" ,
-     "password" : "" ,
-     "number" : "" ,
-    }
+	"name" :"Morning Presence",
+	"event":"5eb9d9d46f813a3970e9ad69"
+}
 ```
+
+## Add User To Presence List
+
+end point 
+```http
+POST /event/presence/user
+```
+| headers  | value |
+| :---  | :--- |
+| `Content-Type`  | `application/json` |
+
+ body example
+
+
+```json
+{
+	"event_counting" :"5ebc26592efff4311c42b34c",
+	"user":"5eb9d8ea6f813a3970e9ad65"
+}
+```
+
+
+The `event_counting` attribute contains the `id` of the Event_Counting .
+The `user` attribute contains the `id` of the user .
+
+
+
+
+## update Event_Counting
+
+> Update the name of the Event_Counting
+
+end point 
+```http
+PUT /event/presence
+```
+| headers  | value |
+| :---  | :--- |
+| `Content-Type`  | `application/json` |
+
+ body example
+
+
+```json
+ {
+ 	"id" : "5ebc26592efff4311c42b34c",
+ 	"name":"new name"
+ }
+```
+
+The `id` attribute contains the `id` of Event_Counting .
+
+
+## Delete Event_Counting
+
+end point 
+```http
+DELETE /event/presence
+```
+| headers  | value |
+| :---  | :--- |
+| `id`  | the `id` of the Event_Counting|
+
+
+
 
 
 
