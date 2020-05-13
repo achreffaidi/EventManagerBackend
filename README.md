@@ -165,6 +165,7 @@ PUT /plan
 ```
 
 The `id` attribute contains the `id` of the Plan .
+
 The `event` attribute contains the `id` of the event associated to the Plan.
 
 ## Delete Plan
@@ -272,6 +273,7 @@ POST /plan
 
 
 The `email` attribute contains the `email` of the user  and The `event` attribute contains the `id` of the event.
+
 The `permissions` attribute contains the list indexs of permissions allowed for a stuff.
 //todo : add example 
 
@@ -296,9 +298,10 @@ PUT /event/staff
 ```
 
 The `id` attribute contains the `id` of Staff .
+
 The `event` attribute contains the `id` of the event associated to the Plan.
 
-## Delete Plan
+## Delete Staff
 
 end point 
 ```http
@@ -308,17 +311,175 @@ DELETE /event/staff
 | :---  | :--- |
 | `id`  | the `id` of the Staff|
 
+## Stuff Permissions 
 
+> Show all possible Permissions
+
+end point 
+```http
+GET /event/staff/permissions
+```
+ Response example
+
+
+```javascript
+{
+    "permissions": [
+        "permission 1",
+        "permission 2",
+        "permission 3",
+        "permission 4",
+        "permission 5"
+    ]
+}
+```
+
+
+# Requests 
+
+| state code  | meaning |
+| :---  | :--- |
+| `0`  | Pending Request |
+| `1`  | Unpaid Request |
+| `2`  | Accepted Request |
+| `3`  | Refused Request |
+
+
+
+## Get all  Requests for an Event
+
+end point 
+```http
+Get /event/request
+```
+| headers  | value |
+| :---  | :--- |
+| `event`  | the `id` of the event |
+
+ Response example
+
+
+```javascript
+{
+    "requests": [
+        {
+            "request": {
+                "state": 2,
+                "_id": "5ebb25ed285f53171c79f9ab",
+                "user": "5eb9d8ea6f813a3970e9ad65",
+                "event": "5eb9d9a86f813a3970e9ad68",
+                "plan": "5eb9daf73765762ddc851c39",
+                "createdAt": "2020-05-12T22:40:45.258Z",
+                "updatedAt": "2020-05-12T23:52:01.690Z",
+                "__v": 0
+            },
+            "user": {
+                "_id": "5eb9d8ea6f813a3970e9ad65",
+                "name": "ahmed",
+                "password": "ahmed",
+                "email": "ahmed@gmail.com",
+                "__v": 0
+            },
+            "plan": {
+                "description": "this is plan C",
+                "options": [
+                    "a",
+                    "b",
+                    "c"
+                ],
+                "cost": 8,
+                "color": 1,
+                "_id": "5eb9daf73765762ddc851c39",
+                "name": "Plan C",
+                "event": "5eb9d9a86f813a3970e9ad68",
+                "createdAt": "2020-05-11T23:08:39.745Z",
+                "updatedAt": "2020-05-11T23:08:39.745Z",
+                "__v": 0
+            }
+        },
+       
+    ]
+}
+```
+
+
+## Create Request
+
+end point 
+```http
+POST /event/request
+```
+| headers  | value |
+| :---  | :--- |
+| `Content-Type`  | `application/json` |
+
+ body example
+
+
+```javascript
+{
+  "user":"",
+  "event":"" ,
+  "plan":""
+}
+```
+
+
+The `user` attribute contains the `id` of the user .
+
+The `event` attribute contains the `id` of the event .
+
+The `plan` attribute contains the `id` of the plan .
+
+
+
+## update Example
+
+> Update the state of the event
+
+end point 
+```http
+PUT /event/request
+```
+| headers  | value |
+| :---  | :--- |
+| `Content-Type`  | `application/json` |
+
+ body example
+
+
+```javascript
+ {
+      "id": "",
+      "state":2
+    }
+```
+
+The `id` attribute contains the `id` of Request .
+
+
+## Delete Request
+
+end point 
+```http
+DELETE /event/request
+```
+| headers  | value |
+| :---  | :--- |
+| `id`  | the `id` of the Request|
 
 
 # Status Codes
 
 EventManager returns the following status codes in its API:
 
+> We should change these values
+
 | Status Code | Description |
 | :--- | :--- |
 | 200 | `OK` |
 | 201 | `CREATED` |
+| 202 | `UPDATED` |
 | 400 | `BAD REQUEST` |
 | 404 | `NOT FOUND` |
 | 500 | `INTERNAL SERVER ERROR` |
