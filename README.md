@@ -510,7 +510,7 @@ POST /users
 ```javascript
 {
      "name" : "" ,
-     "emal"  : "" ,
+     "email"  : "" ,
      "password" : "" ,
      "number" : "" ,
     }
