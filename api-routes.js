@@ -38,18 +38,6 @@ router.route('/events/:event_id')
     .delete(eventController.delete);
 
 
-
-router.route('/contacts')
-    .get(contactController.index)
-    .post(contactController.new);
-
-
-router.route('/contacts/:contact_id')
-    .get(contactController.view)
-    .patch(contactController.update)
-    .put(contactController.update)
-    .delete(contactController.delete);
-
 router.route('/plan')
     .post(planController.createPlan)
 router.route('/plan')
@@ -59,8 +47,7 @@ router.route('/plan')
 router.route('/plan')
     .delete(planController.deletePlan)
 
-router.route('/event/request')
-    .post(requestController.createRequest)
+
 
 
 router.route('/event/image')
@@ -82,6 +69,13 @@ router.route('/event/staff')
 router.route('/event/staff/permissions')
     .get(staffController.getPermissions)
 
+
+router.route('/event/request')
+    .post(requestController.createRequest)
+router.route('/event/request')
+    .get(requestController.getRequestsByEvent)
+router.route('/event/request')
+    .put(requestController.update)
 
 
 
