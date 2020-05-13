@@ -468,6 +468,55 @@ DELETE /event/request
 | :---  | :--- |
 | `id`  | the `id` of the Request|
 
+# Users
+
+
+## Get all users
+
+end point.
+```http
+GET /users
+```
+Response example :
+```javascript
+{
+    "status": "success",
+    "message": "User retrieved successfully",
+    "data": [
+        {
+            "_id": "5eb9d8ea6f813a3970e9ad65",
+            "name": "ahmed",
+            "password": "ahmed",
+            "email": "ahmed@gmail.com",
+            "__v": 0
+        },
+        
+    ]
+}
+```
+
+## Add a new user
+end .point
+```http
+POST /users
+```
+| headers  | value |
+| :---  | :--- |
+| `Content-Type`  | `application/json` |
+
+ body example
+
+
+```javascript
+{
+     "name" : "" ,
+     "emal"  : "" ,
+     "password" : "" ,
+     "number" : "" ,
+    }
+```
+
+
 
 # Status Codes
 
