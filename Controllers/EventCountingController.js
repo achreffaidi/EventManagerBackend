@@ -2,10 +2,12 @@
 // Import contact model
 Events = require('../Models/eventsModel');
 const User = require('../Models/UserModel');
+const EventCounting = require('../Models/EventCountingModel')
+const Presence = require('../Models/PresenceModel')
 
-// Handle index actions
+
 exports.index =    function (req, res) {
-   Events.get(function (err, events) {
+    EventCounting.get(function (err, event_counting) {
         if (err) {
             res.json({
                 status: "error",
@@ -14,75 +16,144 @@ exports.index =    function (req, res) {
         }else
        res.json({
            status: "success",
-           message: "Events retrieved successfully",
-           data: events
+           message: "Event_Counting retrieved successfully",
+           data: event_counting
        });
 
 
     });
 };
-// Handle create contact actions
+
+
 exports.new = function (req, res) {
 
-    var events = new Events();
-    console.log(req.body)
-    events.name = req.body.name ? req.body.name : events.name;
-    events.admin  = req.body.admin ? req.body.admin : events.admin ;
-    events.start_date = req.body.start_date ;
-    events.end_date = req.body.end_date ;
-    events.description = req.body.description ;
-    events.location = req.body.location ;
+    Event.findById(req.body.event,function (err,event) {
 
-// save the contact and check for errors
-    events.save(function (err) {
-        if (err)
-             res.json(err);
-        else
-        res.json({
-            message: 'New Events created!',
-            data: events
+        if(err||!event){
+            res.writeHead(404);
+            res.end("Can't Find the Event .");
+        }
+
+        let event_counting = new EventCounting();
+
+        console.log(req.body)
+        event_counting.name = req.body.name ;
+        event_counting.event  = req.body.event ;
+
+        event_counting.save(function (err) {
+            if (err)
+                res.json(err);
+            else
+                res.json({
+                    message: 'New Event_Counting created!',
+                    data: event_counting
+                });
         });
-    });
+
+    })
+
+
 };
-// Handle view contact info
-exports.view = function (req, res) {
-    Events.findById(req.params.Events_id, function (err, events) {
+
+
+
+exports.getEventCountingById = function (req, res) {
+    EventCounting.findById(req.headers.id, function (err, event_counting) {
         if (err)
             res.send(err);
         res.json({
-            message: 'Events details loading..',
-            data: events
+            message: 'Event_Counting details loading..',
+            data: event_counting
         });
     });
 };
-// Handle update contact info
+
+
 exports.update = function (req, res) {
-    Events.findById(req.params.events_id, function (err, events) {
+    EventCounting.findById(req.body.id, function (err, event_counting) {
         if (err)
             res.send(err);
-        events.name = req.body.name ? req.body.name : events.name;
-        events.admin = req.body.admin;
-// save the contact and check for errors
-        Events.save(function (err) {
+        event_counting.name = req.body.name ;
+
+        event_counting.save(function (err) {
             if (err)
                 res.json(err);
             res.json({
-                message: 'Contact Info updated',
-                data: events
+                message: 'Event_Counting Info updated',
+                data: event_counting
             });
         });
     });
 };
-// Handle delete contact
+
+exports.addPresence = function(req,res){
+
+    EventCounting.findById(req.body.event_counting , function(err,event_counting){
+       if(err){
+           res.send(err);
+       }else if(!event_counting){
+           res.writeHead(404);
+           res.end("Can't Find the EventCounting .");
+       }else{
+           User.findById(req.body.user , function(err,user){
+
+               if(err){
+                   res.send(err);
+               }else if(!user){
+                   res.writeHead(404);
+                   res.end("Can't Find the User .");
+               }else{
+                   let presence = new Presence();
+                   presence.user = user.id;
+                   presence.save(function (err) {
+                       if(err){
+                           res.send(err);
+                       }else{
+                           event_counting.presence_list = event_counting.presence_list.push(presence.id);
+                           event_counting.save(function (err) {
+                               if(err){
+                                   res.send(err);
+                               } else{
+                                   res.json(
+                                       {
+                                           message:"Presence add Successfullt" ,
+                                           date : event_counting
+                                       }
+
+                                   )
+                               }
+
+                           })
+                       }
+
+                   })
+
+
+               }
+
+           });
+
+
+
+       }
+
+
+
+    });
+
+
+}
+
+
 exports.delete = function (req, res) {
-    Events.remove({
-        _id: req.params.events_id
-    }, function (err, events) {
+    EventCounting.remove({
+        _id: req.headers.id
+    }, function (err, event) {
         if (err)
             res.send(err);
         res.json({
             status: "success",
-            message: 'events deleted'
+            message: 'Event_Counting deleted'
         });
     });
 };

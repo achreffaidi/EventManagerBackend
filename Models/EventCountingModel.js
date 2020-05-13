@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const planModel = mongoose.Schema({
+const eventCountingModel = mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -9,26 +9,23 @@ const planModel = mongoose.Schema({
         ref: 'event',
         required: true
     },
-    description :{
-        type : String ,
-        default :""
+
+    state :{
+        // Can the Staff count or not .
+        type : Boolean ,
+        default :false
     },
-    options: {
-        type: [String],
-        default : []
-    },
-    cost : {
-        type : Number ,
-        default:  0.0
+
+
+    presence_list : {
+        type : [mongoose.Schema.Types.ObjectId] ,
+        default: []
     } ,
-    color :  {
-        type : Number ,
-        default : 0
-    }
+
 }, {
     timestamps: true
 });
-var Plan = module.exports = mongoose.model('plan', planModel);
+var EventCounting = module.exports = mongoose.model('event_counting', eventCountingModel);
 module.exports.get = function (callback, limit) {
-    Plan.find(callback).limit(limit);
+    EventCounting.find(callback).limit(limit);
 }
