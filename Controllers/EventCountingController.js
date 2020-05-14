@@ -60,10 +60,15 @@ exports.new = function (req, res) {
 exports.getEventCountingList = function(req , res){
 
 
+    console.log(req.body);
+
     EventCounting.find({event : req.headers.event}, function (err, event_counting) {
         if (err)
             res.send(err);
         else {
+
+            console.log("event_counting: "+ event_counting);
+
             let total = 0 ;
             let c = 0 ;
             let list = [];
@@ -173,7 +178,39 @@ exports.getEventCountingById = function (req, res) {
                 res.end("Can't Find users");
             }else{
 
+                if(event_counting.presence_list.length===0){
+                    let list_out_user =[];
+                    let list_in_user =[];
+                    requests.forEach(function(x){
 
+                            User.findById(x.user, function(err,user){
+
+                                if(err){
+                                    res.send(err);
+                                }else if(!user){
+                                    res.writeHead(404);
+                                    res.end("Can't Find user :"+presence.user);
+                                }else{
+                                    list_out_user.push(user);
+                                    count++ ;
+                                    if(count=== requests.length ){
+                                        res.json({
+                                            message: 'Event_Counting details loading..',
+                                            list_in: list_in_user,
+                                            list_out: list_out_user
+                                        });
+                                    }
+                                }
+
+
+
+
+                            });
+
+                    });
+
+
+                }else
 
                 event_counting.presence_list.forEach(function(id){
                     Presence.findById(id,function (err,presence) {
@@ -195,6 +232,7 @@ exports.getEventCountingById = function (req, res) {
 
                                let list_in_user =[];
                                let list_out_user =[];
+
                                count =0;
                                list_in.forEach(function(x){
                                    User.findById(x, function(err,user){
