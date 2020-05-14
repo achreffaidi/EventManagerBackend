@@ -66,66 +66,78 @@ exports.getEventCountingList = function(req , res){
         else {
             let total = 0 ;
             let c = 0 ;
+            let list = [];
             event_counting.forEach(function(event){
                 total+= event.presence_list.length ;
 
-                let count =0 ;
-                let list = [];
-                let list_in = []
-                let list_out =[]
-                Request.find({event:event.event ,state : 2},function (err,requests) {
-                    if(err){
-                        res.send(err);
-                    }else if(!requests){
-                        res.writeHead(404);
-                        res.end("Can't Find users");
-                    }else{
+                if(event.presence_list.length===0){
+                    list.push({
+                        id:event.id,
+                        name:event.name,
+                        count_in:0,
+                        count_out:0,
+                    });
+                }else{
+                    let count =0 ;
+                    let list_in = []
+                    let list_out =[]
+
+                    Request.find({event:event.event ,state : 2},function (err,requests) {
+                        if(err){
+                            res.send(err);
+                        }else if(!requests){
+                            res.writeHead(404);
+                            res.end("Can't Find users");
+                        }else{
 
 
-                        event.presence_list.forEach(function(id){
-                            Presence.findById(id,function (err,presence) {
-                                if(err){
-                                    res.send(err) ;
-                                }else if(!presence){
-                                    res.writeHead(404);
-                                    res.end("Can't Find presence :"+id);
-                                }else{
-                                    list_in.push(presence.user);
+                            event.presence_list.forEach(function(id){
+                                Presence.findById(id,function (err,presence) {
+                                    if(err){
+                                        res.send(err) ;
+                                    }else if(!presence){
+                                        res.writeHead(404);
+                                        res.end("Can't Find presence :"+id);
+                                    }else{
+                                        list_in.push(presence.user);
 
-                                    count++ ;
+                                        count++ ;
 
-                                    if(count===event.presence_list.length){
-                                        requests.forEach(function(request){
-                                            if(!list_in.includes(request.user)){
-                                                list_out.push(request.user);
-                                            }
-                                        });
-
-                                        list.push({
-                                            id:event.id,
-                                            name:event.name,
-                                            count_in:list_in.length,
-                                            count_out:list_out.length,
-                                        });
-                                        c+=list_in.length
-
-
-                                        if(total===c){
-
-                                            res.json({
-                                                message: 'Event_Counting Info updated',
-                                                data: list
+                                        if(count===event.presence_list.length){
+                                            requests.forEach(function(request){
+                                                if(!list_in.includes(request.user)){
+                                                    list_out.push(request.user);
+                                                }
                                             });
 
+                                            list.push({
+                                                id:event.id,
+                                                name:event.name,
+                                                count_in:list_in.length,
+                                                count_out:list_out.length,
+                                            });
+                                            c+=list_in.length
+
+
+                                            if(total===c){
+
+                                                res.json({
+                                                    message: 'Event_Counting Info updated',
+                                                    data: list
+                                                });
+
+                                            }
+
+
                                         }
-
-
                                     }
-                                }
-                            })
-                        });
-                    }
-                });
+                                })
+                            });
+                        }
+                    });
+                }
+
+
 
             });
         }
@@ -242,6 +254,7 @@ exports.update = function (req, res) {
         if (err)
             res.send(err);
         event_counting.name = req.body.name ;
+        event_counting.state = req.body.state ;
 
         event_counting.save(function (err) {
             if (err)
