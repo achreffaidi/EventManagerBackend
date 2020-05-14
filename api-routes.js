@@ -59,6 +59,9 @@ router.route('/event/image')
 
 router.route('/staff')
     .get(staffController.index)
+router.route('/staff/events')
+    .get(staffController.getEventsByStaff)
+
 router.route('/event/staff')
     .post(staffController.new)
 router.route('/event/staff')
