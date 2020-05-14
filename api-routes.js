@@ -99,7 +99,7 @@ router.route('/event/presence/user')
     .post(eventCountingController.addPresence)
 
 router.route('/login')
-    .get(userController.login)
+    .post(userController.login)
 
 // Export API routes
 module.exports = router;
