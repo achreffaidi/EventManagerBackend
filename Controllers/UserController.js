@@ -63,10 +63,10 @@ exports.login = function (req, res) {
     User.findOne({ email:user.email , password: user.password}, function (err, userFound) {
 
         if (err||!userFound)
-            res.json({
-                message: "error",
-                error:err
-            });
+        {
+            res.writeHead(404);
+            res.end("Cannot find this user.");
+        }
         else
             res.json({
                 message: 'Existing user',
