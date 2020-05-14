@@ -113,6 +113,7 @@ exports.getEventCountingList = function(req , res){
                                             list.push({
                                                 id:event.id,
                                                 name:event.name,
+                                                state : event.state,
                                                 count_in:list_in.length,
                                                 count_out:list_out.length,
                                             });
