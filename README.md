@@ -449,6 +449,64 @@ Get /event/request
 }
 ```
 
+## Get all  Requests for a specific user
+
+end point 
+```http
+GET /user/request
+```
+| headers  | value |
+| :---  | :--- |
+| `user`  | the `id` of the user |
+
+ Response example
+
+
+```json
+{
+    "requests": [
+        {
+            "request": {
+                "state": 3,
+                "_id": "5ebb25cd285f53171c79f9aa",
+                "user": "5eb9d8ea6f813a3970e9ad65",
+                "event": "5eb9d9a86f813a3970e9ad68",
+                "plan": "5eb9da786f813a3970e9ad6e",
+                "createdAt": "2020-05-12T22:40:13.361Z",
+                "updatedAt": "2020-05-12T23:56:49.270Z",
+                "__v": 0
+            },
+            "event": {
+                "_id": "5eb9d9a86f813a3970e9ad68",
+                "name": "Event A",
+                "admin": "5eb9d8fd6f813a3970e9ad66",
+                "start_date": "2020-05-12T23:02:00.000Z",
+                "end_date": "2020-05-19T23:03:00.000Z",
+                "description": "this is event A",
+                "location": "Tunis",
+                "createdAt": "2020-05-11T23:03:04.665Z",
+                "updatedAt": "2020-05-11T23:03:04.665Z",
+                "__v": 0
+            },
+            "plan": {
+                "description": "this is Plan A",
+                "options": [
+                    "option 1",
+                    "option 2"
+                ],
+                "cost": 12,
+                "color": 0,
+                "_id": "5eb9da786f813a3970e9ad6e",
+                "name": "Plan A",
+                "event": "5eb9d9a86f813a3970e9ad68",
+                "createdAt": "2020-05-11T23:06:32.854Z",
+                "updatedAt": "2020-05-11T23:16:56.688Z",
+                "__v": 0
+            }
+        }
+    ]
+}
+```
 
 ## Create Request
 
@@ -479,10 +537,9 @@ The `event` attribute contains the `id` of the event .
 The `plan` attribute contains the `id` of the plan .
 
 
+## update Request
 
-## update Example
-
-> Update the state of the event
+> Update the state of the request
 
 end point 
 ```http
