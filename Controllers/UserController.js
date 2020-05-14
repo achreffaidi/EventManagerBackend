@@ -52,3 +52,26 @@ exports.view = function (req, res) {
         });
     });
 };
+
+exports.login = function (req, res) {
+
+
+    var user = new User();
+    user.password  = req.body.password ? req.body.password : user.password ;
+    user.email  = req.body.email;
+// save the contact and check for errors
+    User.findOne({ email:user.email , password: user.password}, function (err, userFound) {
+
+        if (err||!userFound)
+            res.json({
+                message: "error",
+                error:err
+            });
+        else
+            res.json({
+                message: 'Existing user',
+                id: userFound._id
+            });
+
+    })
+};
