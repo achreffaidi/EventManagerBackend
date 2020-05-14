@@ -106,6 +106,52 @@ exports.getRequestsByEvent = function (req,res) {
 }
 
 
+
+exports.getRequestsByUser = function (req,res) {
+
+    Request.find({'user':req.headers.user},function(err,requests){
+
+        if(err){
+            res.send(err) ;
+        }else{
+
+            let list = [];
+            let count = 0;
+            requests.forEach(function(x){
+
+                Events.findById(x.event,function (err,event) {
+                    if(!err&&event){
+                        Plan.findById(x.plan , function (err,plan) {
+
+                            if(!err&&plan){
+                                list.push({
+                                    "request":x,
+                                    "event":event,
+                                    "plan":plan
+                                })
+                                count++;
+                                if(count===requests.length) res.json({
+                                    "requests":list
+                                })
+                            }
+
+                        })
+
+
+                    }
+
+
+                })
+
+            });
+
+        }
+
+    });
+
+}
+
+
 exports.update = function(req , res){
 
     console.log(req.body);

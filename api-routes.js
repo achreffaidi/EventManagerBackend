@@ -75,6 +75,8 @@ router.route('/event/request')
     .post(requestController.createRequest)
 router.route('/event/request')
     .get(requestController.getRequestsByEvent)
+router.route('/user/request')
+    .get(requestController.getRequestsByUser)
 router.route('/event/request')
     .put(requestController.update)
 
