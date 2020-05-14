@@ -282,7 +282,14 @@ exports.addPresence = function(req,res){
        }else if(!event_counting){
            res.writeHead(404);
            res.end("Can't Find the EventCounting .");
-       }else{
+       }else if(!event_counting.state){
+
+           res.writeHead(400);
+           res.end("Counting is Disabled by the Admin");
+
+       } else{
+
+
            User.findById(req.body.user , function(err,user){
 
                if(err){
@@ -292,6 +299,7 @@ exports.addPresence = function(req,res){
                    res.writeHead(404);
                    res.end("Can't Find the User .");
                }else{
+
                    let presence = new Presence();
                    presence.user = user.id;
                    presence.save(function (err) {
