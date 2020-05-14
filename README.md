@@ -26,7 +26,6 @@ GET /event
 
  Response example
 
-
 ```json
 {
     "status": "success",
@@ -48,6 +47,39 @@ GET /event
     ]
 }
 ```
+
+## Get all  Events for a specific Staff
+
+end point 
+```http
+Get /staff/events
+```
+| headers  | value |
+| :---  | :--- |
+| `user`  | the `id` of the staff |
+
+ Response example
+
+
+```json
+{
+    "events": [
+        {
+            "_id": "5eb9d9a86f813a3970e9ad68",
+            "name": "Event A",
+            "admin": "5eb9d8fd6f813a3970e9ad66",
+            "start_date": "2020-05-12T23:02:00.000Z",
+            "end_date": "2020-05-19T23:03:00.000Z",
+            "description": "this is event A",
+            "location": "Tunis",
+            "createdAt": "2020-05-11T23:03:04.665Z",
+            "updatedAt": "2020-05-11T23:03:04.665Z",
+            "__v": 0
+        }
+    ]
+}
+```
+
 ## Create Event
 
 end point 
@@ -74,6 +106,7 @@ POST /event
 
 
 The `admin` attribute contains the `id` of the user who created the event.
+
 
 # Users
 
@@ -628,7 +661,7 @@ GET /presence
             "password": "ahmed",
             "email": "ahmed@gmail.com",
             "__v": 0
-        },
+        }
     ],
     "list_out": [
         {
@@ -637,7 +670,7 @@ GET /presence
             "password": "ahmed",
             "email": "ahmed@gmail.com",
             "__v": 0
-        },
+        }
     ]
 }
 ```

@@ -149,6 +149,53 @@ exports.getPermissions = function (req,res) {
 }
 
 
+exports.getEventsByStaff = function (req,res) {
+
+
+
+    Staff.find({'user':req.headers.user},function(err,staffs){
+
+
+        if(err){
+            res.send(err) ;
+        }else{
+
+            let list = [];
+            let count = 0;
+            staffs.forEach(function(x){
+                if(!list.includes(x.event)) list.push(x.event);
+            });
+
+            let list_event = [];
+            list.forEach(function (id) {
+
+                Events.findById(id,function (err,event) {
+                    if(err){
+                        console.log(err);
+                    }
+                    if(!err&&event){
+                        list_event.push(
+                            event
+                        )
+                    }
+                    count++;
+                    console.log("staffs :"+list_event);
+                    if(count===list.length) res.json({
+                        "events":list_event
+                    })
+                })
+
+            })
+
+
+        }
+
+    });
+
+
+
+}
+
 exports.delete = function(req,res){
 
     Staff.deleteOne({_id: req.headers.id}, function(err, results) {
