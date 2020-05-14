@@ -540,6 +540,7 @@ GET /event/presence
         {
             "id": "5ebc26592efff4311c42b34c",
             "name": "testing name",
+	    "state": false,
             "count_in": 2,
             "count_out": 2
         }
