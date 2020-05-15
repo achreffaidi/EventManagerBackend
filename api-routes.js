@@ -17,6 +17,7 @@ var requestController = require('./Controllers/requestController');
 var eventImageController = require('./Controllers/EventImageController');
 var staffController = require('./Controllers/StaffController');
 var eventCountingController = require('./Controllers/EventCountingController')
+var timeSlotController = require('./Controllers/TimeSlotController')
 // Contact routes
 
 
@@ -97,6 +98,14 @@ router.route('/event/presence')
     .delete(eventCountingController.delete)
 router.route('/event/presence/user')
     .post(eventCountingController.addPresence)
+
+
+router.route('/Event/timeslot')
+    .post(timeSlotController.new)
+router.route('/Event/timeslot')
+    .get(timeSlotController.getTimeSlotsByEvent)
+router.route('/Event/timeslot')
+    .delete(timeSlotController.delete)
 
 router.route('/login')
     .post(userController.login)

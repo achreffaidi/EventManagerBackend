@@ -759,6 +759,73 @@ DELETE /event/presence
 | :---  | :--- |
 | `id`  | the `id` of the Event_Counting|
 
+# Event TimeLine 
+
+## Get Time Slots for an Event
+
+end point 
+```http
+Get /Event/timeslot
+```
+| headers  | value |
+| :---  | :--- |
+| `event`  | the `id` of the event |
+
+ Response example
+
+
+```json
+{
+    "timeslots": [
+        {
+            "_id": "5ebdfe8d65c84b23a842908c",
+            "event": "5eb9d9a86f813a3970e9ad68",
+            "start_date": "2020-05-14T21:04:58.816Z",
+            "end_date": "2020-05-14T21:04:58.816Z",
+            "title": "breakfast",
+            "location": "resto",
+            "__v": 0
+        }
+    ]
+}
+```
+
+## Create TimeSlot
+
+end point 
+```http
+POST /Event/timeslot
+```
+| headers  | value |
+| :---  | :--- |
+| `Content-Type`  | `application/json` |
+
+ body example
+
+
+```json
+{
+	"title" : "Workshop C" , 
+	"location":"Amphi C",
+	"event":"5eb9d9a86f813a3970e9ad68", 
+	"start_date":"2020-05-15T03:04:58.816Z",
+	"end_date":"2020-05-15T04:04:58.816Z"
+}
+```
+
+
+The `event` attribute contains the `id` of the event associated to the TimeSlot.
+
+
+## Delete TimeSlot
+
+end point 
+```http
+DELETE /Event/timeslot
+```
+| headers  | value |
+| :---  | :--- |
+| `id`  | the `id` of the TimeSlot |
 
 
 
