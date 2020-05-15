@@ -183,3 +183,21 @@ exports.update = function(req , res){
 }
 
 
+exports.deleteRequest = function(req,res){
+
+    Request.deleteOne({_id: req.headers.id}, function(err, results) {
+        if (err){
+            console.log("failed");
+            throw err;
+        }
+        res.json({
+            "message":"delete successfully",
+            "data":results
+        })
+
+        console.log("success");
+    });
+
+}
+
+

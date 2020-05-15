@@ -83,6 +83,8 @@ router.route('/user/request')
     .get(requestController.getRequestsByUser)
 router.route('/event/request')
     .put(requestController.update)
+router.route('/event/request')
+    .delete(requestController.deleteRequest)
 
 
 
