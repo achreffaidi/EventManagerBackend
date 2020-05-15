@@ -11,12 +11,54 @@ exports.index =    function (req, res) {
                 status: "error",
                 message: err,
             });
-        }else
-       res.json({
-           status: "success",
-           message: "Events retrieved successfully",
-           data: events
-       });
+        }else{
+            var list = [];
+            let count = 0 ;
+
+            for(let i = 0  ; i<events.length ;i++){
+               User.findById(events[i].admin,function(err,user){
+                   if(err||!user){
+                       res.status(404);
+                       res.send("Can't find User :"+events[i].admin)
+                   }else{
+
+                       list.push({
+                           id: events[i].id,
+                           name : events[i].name,
+                           admin : user.name,
+                           description : events[i].description,
+                           location : events[i].location,
+                           start_date : events[i].start_date,
+                           end_date : events[i].end_date
+
+                       })
+
+
+                     count++ ;
+                     if(count===events.length){
+                         res.json({
+                             status: "success",
+                             message: "Events retrieved successfully",
+                             data: list
+                         });
+                     }
+                   }
+
+
+               })
+
+
+            };
+
+
+
+
+
+        }
+
+
+
+
 
 
     });
