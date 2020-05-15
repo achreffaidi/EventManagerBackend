@@ -32,18 +32,14 @@ GET /event
     "message": "Events retrieved successfully",
     "data": [
         {
-            "_id": "5eb9d9a86f813a3970e9ad68",
+            "id": "5eb9d9a86f813a3970e9ad68",
             "name": "Event A",
-            "admin": "5eb9d8fd6f813a3970e9ad66",
-            "start_date": "2020-05-12T23:02:00.000Z",
-            "end_date": "2020-05-19T23:03:00.000Z",
+            "admin": "achref",
             "description": "this is event A",
             "location": "Tunis",
-            "createdAt": "2020-05-11T23:03:04.665Z",
-            "updatedAt": "2020-05-11T23:03:04.665Z",
-            "__v": 0
+            "start_date": "2020-05-12T23:02:00.000Z",
+            "end_date": "2020-05-19T23:03:00.000Z"
         }
-        
     ]
 }
 ```
