@@ -63,7 +63,31 @@ exports.index =    function (req, res) {
 
     });
 };
-// Handle create contact actions
+
+
+
+
+exports.getEventByAdmin =    function (req, res) {
+    Events.find({admin:req.headers.user},function (err, events) {
+        if (err) {
+            res.json({
+                status: "error",
+                message: err,
+            });
+        }else{
+
+            res.json({
+                status: "success",
+                message: "Events retrieved successfully",
+                data: events
+            });
+
+        }
+    });
+};
+
+
+
 exports.new = function (req, res) {
 
     var events = new Events();

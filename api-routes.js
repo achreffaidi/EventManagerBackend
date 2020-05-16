@@ -32,6 +32,8 @@ router.route('/users/:user_id')
 router.route('/events')
     .get(eventController.index)
     .post(eventController.new);
+router.route('/events/admin')
+    .get(eventController.getEventByAdmin);
 
 router.route('/events/:event_id')
     .get(eventController.view)
