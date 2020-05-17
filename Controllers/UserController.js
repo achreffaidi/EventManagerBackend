@@ -70,7 +70,7 @@ exports.login = function (req, res) {
         else
             res.json({
                 message: 'Existing user',
-                id: userFound._id
+                id: userFound
             });
 
     })
