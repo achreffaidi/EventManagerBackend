@@ -77,6 +77,7 @@ exports.login = function (req, res) {
 
             var passwordIsValid = bcrypt.compareSync(req.body.password, user.password)
 
+
            if(passwordIsValid){
                let token = jwt.sign({
                    id: user._id ,
