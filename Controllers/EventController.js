@@ -46,7 +46,7 @@ exports.index =    function (req, res) {
                })
 
 
-            };
+            }
 
 
 
@@ -88,10 +88,11 @@ exports.getEventByAdmin =    function (req, res) {
 
 exports.new = function (req, res) {
 
+
     var events = new Events();
     console.log(req.body)
     events.name = req.body.name ? req.body.name : events.name;
-    events.admin  = req.body.admin ? req.body.admin : events.admin ;
+    events.admin  = req.userId ;
     events.start_date = req.body.start_date ;
     events.end_date = req.body.end_date ;
     events.description = req.body.description ;

@@ -18,12 +18,15 @@ var eventCountingController = require('./Controllers/EventCountingController')
 var timeSlotController = require('./Controllers/TimeSlotController')
 
 //userController.verifyToken
+//userController.verifyAdmin,
 router.route('/users')
     .get(userController.verifyToken,userController.index)
     .post(userController.new);
 
 router.route('/login')
     .post(userController.login)
+router.route('/login/admin')
+    .post( userController.loginAsAdmin)
 
 
 router.route('/users/:user_id')
@@ -31,7 +34,7 @@ router.route('/users/:user_id')
 
 
 router.route('/events')
-    .get(eventController.index)
+    .get(userController.verifyToken,eventController.index)
     .post(eventController.new);
 router.route('/events/admin')
     .get(eventController.getEventByAdmin);
