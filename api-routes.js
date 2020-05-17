@@ -17,10 +17,14 @@ var staffController = require('./Controllers/StaffController');
 var eventCountingController = require('./Controllers/EventCountingController')
 var timeSlotController = require('./Controllers/TimeSlotController')
 
-
+//userController.verifyToken
 router.route('/users')
-    .get(userController.index)
+    .get(userController.verifyToken,userController.index)
     .post(userController.new);
+
+router.route('/login')
+    .post(userController.login)
+
 
 router.route('/users/:user_id')
     .get(userController.view)
@@ -108,8 +112,7 @@ router.route('/Event/timeslot')
 router.route('/Event/timeslot')
     .delete(timeSlotController.delete)
 
-router.route('/login')
-    .post(userController.login)
+
 
 // Export API routes
 module.exports = router;

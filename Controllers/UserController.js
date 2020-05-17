@@ -1,5 +1,9 @@
 const User = require('../Models/UserModel');
 const Events = require('../Models/eventsModel');
+var jwt = require('jsonwebtoken');
+var bcrypt = require('bcryptjs');
+var config = require('../config');
+
 exports.index = function (req, res) {
     User.get(function (err, users) {
         if (err) {
@@ -18,10 +22,10 @@ exports.index = function (req, res) {
 };
 exports.new = function (req, res) {
 
-
+    var hashedPassword = bcrypt.hashSync(req.body.password, 8);
     var user = new User();
     user.name = req.body.name ? req.body.name : user.name ;
-    user.password  = req.body.password ? req.body.password : user.password ;
+    user.password  =  hashedPassword ;
     user.email  = req.body.email;
     user.number=req.body.number;
 
@@ -30,10 +34,17 @@ exports.new = function (req, res) {
         if (err)
              res.json(err);
         else
-        res.json({
-            message: 'New User created!',
-            data: user
-        });
+        {
+            let token = jwt.sign({ id: user._id }, config.secret, {
+                expiresIn: 864000 // expires in 10 days
+            });
+            res.json({
+                message: ' Created Successfully',
+                token: token ,
+                name : user.name ,
+                id: user.id
+            });
+        }
     });
 };
 
@@ -52,22 +63,50 @@ exports.view = function (req, res) {
 exports.login = function (req, res) {
 
 
-    var user = new User();
-    user.password  = req.body.password ? req.body.password : user.password ;
-    user.email  = req.body.email;
-// save the contact and check for errors
-    User.findOne({ email:user.email , password: user.password}, function (err, userFound) {
 
-        if (err||!userFound)
+// save the contact and check for errors
+    User.findOne({ email:req.body.email }, function (err, user) {
+
+        if (err||!user)
         {
             res.writeHead(404);
             res.end("Cannot find this user.");
         }
-        else
-            res.json({
-                message: 'Existing user',
-                id: userFound._id
-            });
+        else {
 
+            var passwordIsValid = bcrypt.compareSync(req.body.password, user.password)
+
+           if(passwordIsValid){
+               let token = jwt.sign({ id: user._id }, config.secret, {
+                   expiresIn: 864000 // expires in 10 days
+               });
+               res.json({
+                   message: 'Existing user',
+                   token: token ,
+                   name : user.name ,
+                   id: user.id
+               });
+           }
+
+        }
     })
 };
+
+
+
+
+exports.verifyToken = function(req, res, next) {
+    var token = req.headers['x-access-token'];
+    if (!token)
+        return res.status(403).send({auth: false, message: 'No token provided.'});
+
+    jwt.verify(token, config.secret, function (err, decoded) {
+        if (err)
+            return res.status(500).send({auth: false, message: 'Failed to authenticate token.'});
+
+        // if everything good, save to request for use in other routes
+        req.userId = decoded.id;
+        next();
+    });
+}
+
