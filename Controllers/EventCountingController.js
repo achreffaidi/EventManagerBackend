@@ -196,7 +196,7 @@ exports.getEventCountingById = function (req, res) {
                                 res.send(err);
                             } else if (!user) {
                                 res.writeHead(404);
-                                res.end("Can't Find user :" + presence.user);
+                                res.end("Can't Find user :" + x.user);
                             } else {
                                 list_out_user.push(user);
                                 count++;
