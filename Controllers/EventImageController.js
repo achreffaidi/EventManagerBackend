@@ -1,5 +1,4 @@
-// contactController.js
-// Import contact model
+
 Events = require('../Models/eventsModel');
 EventImages = require('../Models/eventImageModel');
 const formidable = require('formidable');

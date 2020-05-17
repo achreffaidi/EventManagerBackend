@@ -8,8 +8,6 @@ router.get('/', function (req, res) {
         message: 'Welcome to RESTHub crafted with love!',
     });
 });
-// Import contact controller
-var contactController = require('./Controllers/contactController');
 var userController = require('./Controllers/UserController');
 var eventController = require('./Controllers/EventController');
 var planController = require('./Controllers/planController');
@@ -18,12 +16,15 @@ var eventImageController = require('./Controllers/EventImageController');
 var staffController = require('./Controllers/StaffController');
 var eventCountingController = require('./Controllers/EventCountingController')
 var timeSlotController = require('./Controllers/TimeSlotController')
-// Contact routes
 
-
+//userController.verifyToken
 router.route('/users')
-    .get(userController.index)
+    .get(userController.verifyToken,userController.index)
     .post(userController.new);
+
+router.route('/login')
+    .post(userController.login)
+
 
 router.route('/users/:user_id')
     .get(userController.view)
@@ -111,8 +112,7 @@ router.route('/Event/timeslot')
 router.route('/Event/timeslot')
     .delete(timeSlotController.delete)
 
-router.route('/login')
-    .post(userController.login)
+
 
 // Export API routes
 module.exports = router;

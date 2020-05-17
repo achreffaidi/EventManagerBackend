@@ -1,5 +1,3 @@
-// contactController.js
-// Import contact model
 const Event = require('../Models/eventsModel');
 const User = require('../Models/UserModel');
 const EventCounting = require('../Models/EventCountingModel')
