@@ -16,7 +16,13 @@ const userModel = mongoose.Schema({
         number : {
             type: String,
             required: true
-        }}
+        },
+        isAdmin : {
+            type: Boolean,
+            default : false
+        }
+
+}
     );
 
 

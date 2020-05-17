@@ -65,8 +65,9 @@ exports.getEventCountingList = function (req, res) {
         EventCounting.find({event: req.headers.event}, function (err, event_counting) {
 
             //get all counting related to  that event .
-            if (err)
+            if (err){
                 res.send(err);
+            }
             else if (!event_counting || event_counting.length === 0) {
                 res.json({
                     message: 'Event_Counting : Empty List',
