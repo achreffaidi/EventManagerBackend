@@ -1,8 +1,5 @@
-// contactController.js
-// Import contact model
 const User = require('../Models/UserModel');
 const Events = require('../Models/eventsModel');
-// Handle index actions
 exports.index = function (req, res) {
     User.get(function (err, users) {
         if (err) {
@@ -19,7 +16,6 @@ exports.index = function (req, res) {
         });
     });
 };
-// Handle create contact actions
 exports.new = function (req, res) {
 
 
@@ -28,7 +24,8 @@ exports.new = function (req, res) {
     user.password  = req.body.password ? req.body.password : user.password ;
     user.email  = req.body.email;
     user.number=req.body.number;
-// save the contact and check for errors
+
+
     user.save(function (err) {
         if (err)
              res.json(err);
@@ -41,7 +38,6 @@ exports.new = function (req, res) {
 };
 
 
-// Handle view contact info
 exports.view = function (req, res) {
     User.findById(req.params.user_id, function (err, user) {
         if (err)

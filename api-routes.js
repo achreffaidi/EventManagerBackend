@@ -8,8 +8,6 @@ router.get('/', function (req, res) {
         message: 'Welcome to RESTHub crafted with love!',
     });
 });
-// Import contact controller
-var contactController = require('./Controllers/contactController');
 var userController = require('./Controllers/UserController');
 var eventController = require('./Controllers/EventController');
 var planController = require('./Controllers/planController');
@@ -18,7 +16,6 @@ var eventImageController = require('./Controllers/EventImageController');
 var staffController = require('./Controllers/StaffController');
 var eventCountingController = require('./Controllers/EventCountingController')
 var timeSlotController = require('./Controllers/TimeSlotController')
-// Contact routes
 
 
 router.route('/users')

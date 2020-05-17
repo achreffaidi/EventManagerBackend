@@ -1,11 +1,7 @@
-// contactController.js
-// Import contact model
 const Events = require('../Models/eventsModel');
 const TimeSlot = require('../Models/TimeSlotModel');
 
-// Handle index actions
 
-// Handle create contact actions
 exports.new = function (req, res) {
 
 

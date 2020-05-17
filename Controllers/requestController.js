@@ -1,12 +1,9 @@
-// contactController.js
-// Import contact model
+
 const User = require('../Models/UserModel');
 const Events = require('../Models/eventsModel');
 const Plan = require('../Models/planModel')
 const Request = require('../Models/RequestModel')
-// Handle index actions
 
-// Handle create contact actions
 exports.createRequest = function (req, res) {
 
     console.log(req.body.name)

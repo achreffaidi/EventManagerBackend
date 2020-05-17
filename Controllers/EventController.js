@@ -1,9 +1,7 @@
-// contactController.js
-// Import contact model
+
 Events = require('../Models/eventsModel');
 const User = require('../Models/UserModel');
 
-// Handle index actions
 exports.index =    function (req, res) {
    Events.get(function (err, events) {
         if (err) {
@@ -110,7 +108,6 @@ exports.new = function (req, res) {
         });
     });
 };
-// Handle view contact info
 exports.view = function (req, res) {
     Events.findById(req.params.Events_id, function (err, events) {
         if (err)
@@ -121,14 +118,12 @@ exports.view = function (req, res) {
         });
     });
 };
-// Handle update contact info
 exports.update = function (req, res) {
     Events.findById(req.params.events_id, function (err, events) {
         if (err)
             res.send(err);
         events.name = req.body.name ? req.body.name : events.name;
         events.admin = req.body.admin;
-// save the contact and check for errors
         events.save(function (err) {
             if (err)
                 res.json(err);
@@ -139,7 +134,6 @@ exports.update = function (req, res) {
         });
     });
 };
-// Handle delete contact
 exports.delete = function (req, res) {
     Events.remove({
         _id: req.params.id
