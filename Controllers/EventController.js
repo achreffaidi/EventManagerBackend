@@ -1,6 +1,8 @@
 
 Events = require('../Models/eventsModel');
 const User = require('../Models/UserModel');
+const Tag = require('../Models/TagModel');
+
 
 exports.index =    function (req, res) {
    Events.get(function (err, events) {
@@ -27,8 +29,8 @@ exports.index =    function (req, res) {
                            description : events[i].description,
                            location : events[i].location,
                            start_date : events[i].start_date,
-                           end_date : events[i].end_date
-
+                           end_date : events[i].end_date,
+                           tags : events[i].tags
                        })
 
 
@@ -62,9 +64,6 @@ exports.index =    function (req, res) {
     });
 };
 
-
-
-
 exports.getEventByAdmin =    function (req, res) {
     Events.find({admin:req.headers.user},function (err, events) {
         if (err) {
@@ -83,9 +82,6 @@ exports.getEventByAdmin =    function (req, res) {
         }
     });
 };
-
-
-
 exports.new = function (req, res) {
 
 
@@ -147,3 +143,153 @@ exports.delete = function (req, res) {
         });
     });
 };
+
+
+exports.addTag = function(req,res){
+
+    Events.findById(req.body.event,function(err,event){
+       if(err){
+           res.send(err);
+       } else{
+
+           if(!event.tags.includes(req.body.tag)){
+
+               Tag.findById(req.body.tag,function (err,tag) {
+
+                   if(err){
+                       res.json({
+                           message : "Can't find Tag"
+                       })
+
+                   }else{
+
+                       tag.count = tag.count + 1 ;
+                       tag.save(function (err) {
+                           if(err){
+                               res.json({
+                                   message : "Can't increment Tag"
+                               })
+                           }else{
+
+                               event.tags = event.tags + req.body.tag ;
+                               event.save(
+                                   function (err) {
+                                   if(err){
+                                       res.json({
+                                           message : "Can't add the Tag"
+                                       })
+                                   }else{
+                                       res.json({
+                                           message : "Tag add successfully"
+                                       })
+                                   }
+                                   }
+                               )
+
+                           }
+
+                       })
+
+                   }
+
+
+               })
+
+
+           }else{
+
+               res.json({
+                   message : "Tag Already assigned"
+               })
+
+           }
+
+       }
+    });
+
+
+}
+exports.removeTag = function(req,res){
+
+    Events.findById(req.body.event,function(err,event){
+        if(err){
+            res.send(err);
+        } else{
+
+            if(event.tags.includes(req.body.tag)){
+
+                Tag.findById(req.body.tag,function (err,tag) {
+
+                    if(err){
+                        res.json({
+                            message : "Can't find Tag"
+                        })
+
+                    }else{
+
+                        tag.count = tag.count - 1 ;
+                        tag.save(function (err) {
+                            if(err){
+                                res.json({
+                                    message : "Can't decrement Tag"
+                                })
+                            }else{
+
+                                event.tags = event.tags.filter(function(value, index, arr){ return value !== tag;});
+                                event.save(
+                                    function (err) {
+                                        if(err){
+                                            res.json({
+                                                message : "Can't remove the Tag"
+                                            })
+                                        }else{
+                                            res.json({
+                                                message : "Tag removed successfully"
+                                            })
+                                        }
+                                    }
+                                )
+
+                            }
+
+                        })
+
+                    }
+
+
+                })
+
+
+            }else{
+
+                res.json({
+                    message : "Tag Not assigned"
+                })
+
+            }
+
+        }
+    });
+
+
+}
+
+exports.getTags = function(req,res){
+
+    Events.findById(req.headers.event,function(err,event){
+        if(err){
+            res.send(err);
+        } else{
+
+                res.json({
+                    message : "Event Tags",
+                    data : event.tags
+                })
+
+
+
+        }
+    });
+
+
+}

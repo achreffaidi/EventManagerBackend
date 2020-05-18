@@ -15,72 +15,166 @@ https://event-manager-red.herokuapp.com/api
 
 # Using Guide 
 
-# Event
+# Tags
 
-## Get All Events
+## Get All Tags
 
 end point 
 ```http
-GET /event
+GET /tags
 ```
 
  Response example
 
 ```json
 {
-    "status": "success",
-    "message": "Events retrieved successfully",
+    "message": "tags",
     "data": [
         {
-            "id": "5eb9d9a86f813a3970e9ad68",
-            "name": "Event A",
-            "admin": "achref",
-            "description": "this is event A",
-            "location": "Tunis",
-            "start_date": "2020-05-12T23:02:00.000Z",
-            "end_date": "2020-05-19T23:03:00.000Z"
-        }
-    ]
-}
-```
-
-## Get all  Events for a specific Staff
-
-end point 
-```http
-Get /staff/events
-```
-| headers  | value |
-| :---  | :--- |
-| `user`  | the `id` of the staff |
-
- Response example
-
-
-```json
-{
-    "events": [
-        {
-            "_id": "5eb9d9a86f813a3970e9ad68",
-            "name": "Event A",
-            "admin": "5eb9d8fd6f813a3970e9ad66",
-            "start_date": "2020-05-12T23:02:00.000Z",
-            "end_date": "2020-05-19T23:03:00.000Z",
-            "description": "this is event A",
-            "location": "Tunis",
-            "createdAt": "2020-05-11T23:03:04.665Z",
-            "updatedAt": "2020-05-11T23:03:04.665Z",
+            "count": 2,
+            "_id": "5ec3120a4e373533e069fea1",
+            "name": "fun",
             "__v": 0
         }
     ]
 }
 ```
 
-## Create Event
+## Get Tags of an Event
 
 end point 
 ```http
-POST /event
+Get /event/tags
+```
+| headers  | value |
+| :---  | :--- |
+| `event`  | the `id` of the event |
+
+ Response example
+
+
+```json
+{
+    "message": "Event Tags",
+    "data": [
+        "5ec3120a4e373533e069fea1"
+    ]
+}
+```
+
+## Create new Tag
+
+end point 
+```http
+POST /tags
+```
+| headers  | value |
+| :---  | :--- |
+| `name`  | tag name |
+
+ Response example
+
+
+```json
+{
+    "message": "New Tag created!",
+    "data": {
+        "count": 0,
+        "_id": "5ec3126cebfc531238c445b2",
+        "name": "music",
+        "__v": 0
+    }
+}
+```
+
+## add Tag to Event
+
+end point 
+```http
+POST /event/tags
+```
+| headers  | value |
+| :---  | :--- |
+| `Content-Type`  | `application/json` |
+ body example
+
+
+```json
+{
+	"event":"5eb9da096f813a3970e9ad6a",
+	"tag":"5ec3120a4e373533e069fea1"
+}
+```
+
+
+The `event` attribute contains the `id` of the event.
+The `tag` attribute contains the `id` of the tag.
+
+## Remove Tag from Event
+
+end point 
+```http
+DELETE /event/tags
+```
+| headers  | value |
+| :---  | :--- |
+| `Content-Type`  | `application/json` |
+ body example
+
+
+```json
+{
+	"event":"5eb9da096f813a3970e9ad6a",
+	"tag":"5ec3120a4e373533e069fea1"
+}
+```
+
+
+The `event` attribute contains the `id` of the event.
+The `tag` attribute contains the `id` of the tag.
+
+# Plan ( Offer )
+
+## Get all  Plans for an Event
+
+end point 
+```http
+Get /plan
+```
+| headers  | value |
+| :---  | :--- |
+| `event`  | the `id` of the event |
+
+ Response example
+
+
+```json
+{
+    "plans": [
+        {
+            "description": "this is Plan A",
+            "options": [
+                "option 1",
+                "option 2"
+            ],
+            "cost": 12,
+            "color": 0,
+            "_id": "5eb9da786f813a3970e9ad6e",
+            "name": "Plan A",
+            "event": "5eb9d9a86f813a3970e9ad68",
+            "createdAt": "2020-05-11T23:06:32.854Z",
+            "updatedAt": "2020-05-11T23:16:56.688Z",
+            "__v": 0
+        }
+    ]
+}
+```
+
+## Create Plan
+
+end point 
+```http
+POST /plan
 ```
 | headers  | value |
 | :---  | :--- |
@@ -91,17 +185,56 @@ POST /event
 
 ```json
 {
-     "name" : "" ,
-     "admin"  : "" ,
-     "start_date" : "" ,
-     "end_date" : "" ,
-     "description" : "" ,
-     "location" : "" 
-}
+      "name":"",
+      "event":"" ,
+      "description":"",
+      "options": "",
+      "cost": "",
+      "color":""
+    }
 ```
 
 
-The `admin` attribute contains the `id` of the user who created the event.
+The `event` attribute contains the `id` of the event associated to the Plan.
+
+## update Plan
+
+end point 
+```http
+PUT /plan
+```
+| headers  | value |
+| :---  | :--- |
+| `Content-Type`  | `application/json` |
+
+ body example
+
+
+```json
+{
+      "id":"",
+      "name":"",
+      "event":"" ,
+      "description":"",
+      "options": "",
+      "cost": "",
+      "color":""
+    }
+```
+
+The `id` attribute contains the `id` of the Plan .
+
+The `event` attribute contains the `id` of the event associated to the Plan.
+
+## Delete Plan
+
+end point 
+```http
+DELETE /plan
+```
+| headers  | value |
+| :---  | :--- |
+| `id`  | the `id` of the Plan |
 
 
 # Users
@@ -822,8 +955,6 @@ DELETE /Event/timeslot
 | headers  | value |
 | :---  | :--- |
 | `id`  | the `id` of the TimeSlot |
-
-
 
 
 

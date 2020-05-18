@@ -16,6 +16,7 @@ var eventImageController = require('./Controllers/EventImageController');
 var staffController = require('./Controllers/StaffController');
 var eventCountingController = require('./Controllers/EventCountingController')
 var timeSlotController = require('./Controllers/TimeSlotController')
+var tagController = require('./Controllers/tagsController')
 
 //userController.verifyToken
 //userController.verifyAdmin,
@@ -34,7 +35,7 @@ router.route('/users/:user_id')
 
 
 router.route('/events')
-    .get(userController.verifyToken,eventController.index)
+    .get(eventController.index)
     .post(eventController.new);
 router.route('/events/admin')
     .get(eventController.getEventByAdmin);
@@ -81,6 +82,7 @@ router.route('/event/staff/permissions')
     .get(staffController.getPermissions)
 
 
+
 router.route('/event/request')
     .post(requestController.createRequest)
 router.route('/event/request')
@@ -92,6 +94,14 @@ router.route('/event/request')
 router.route('/event/request')
     .delete(requestController.deleteRequest)
 
+
+router.route('/event/tags')
+    .post(eventController.addTag)
+    .delete(eventController.removeTag)
+    .get(eventController.getTags)
+router.route('/tags')
+    .post(tagController.new)
+    .get(tagController.get)
 
 
 router.route('/presence')
