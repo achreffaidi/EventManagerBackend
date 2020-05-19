@@ -170,11 +170,13 @@ exports.addTag = function(req,res){
                                    message : "Can't increment Tag"
                                })
                            }else{
-
-                               event.tags = event.tags + req.body.tag ;
+                               let list = event.tags ;
+                               list.push(req.body.tag);
+                               event.tags =list ;
                                event.save(
                                    function (err) {
                                    if(err){
+                                       console.log(err);
                                        res.json({
                                            message : "Can't add the Tag"
                                        })
@@ -211,14 +213,14 @@ exports.addTag = function(req,res){
 }
 exports.removeTag = function(req,res){
 
-    Events.findById(req.body.event,function(err,event){
+    Events.findById(req.headers.event,function(err,event){
         if(err){
             res.send(err);
         } else{
 
-            if(event.tags.includes(req.body.tag)){
+            if(event.tags.includes(req.headers.tag)){
 
-                Tag.findById(req.body.tag,function (err,tag) {
+                Tag.findById(req.headers.tag,function (err,tag) {
 
                     if(err){
                         res.json({
@@ -234,8 +236,10 @@ exports.removeTag = function(req,res){
                                     message : "Can't decrement Tag"
                                 })
                             }else{
-
-                                event.tags = event.tags.filter(function(value, index, arr){ return value !== tag;});
+                                let list = event.tags ;
+                                 list.splice(list.indexOf(req.headers.tag), 1);
+                                console.log(list);
+                                event.tags = list ;
                                 event.save(
                                     function (err) {
                                         if(err){
