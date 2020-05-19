@@ -15,6 +15,261 @@ https://event-manager-red.herokuapp.com/api
 
 # Using Guide 
 
+# Authentication
+
+
+* The verification is done by a middleware function `verifyToken` located in the `UserController.js` file.
+* The authentication is not required for all requests now but it will be soon.
+* User should attach the `token` to the headers of each request.
+  
+| headers  | value |
+| :---  | :--- |
+| `x-access-token`  | the token |
+
+# Event
+
+## Get All Events
+
+end point 
+```http
+GET /event
+```
+
+ Response example
+
+```json
+{
+    "status": "success",
+    "message": "Events retrieved successfully",
+    "data": [
+        {
+            "id": "5eb9d9a86f813a3970e9ad68",
+            "name": "Event A",
+            "admin": "achref",
+            "description": "this is event A",
+            "location": "Tunis",
+            "start_date": "2020-05-12T23:02:00.000Z",
+            "end_date": "2020-05-19T23:03:00.000Z"
+        }
+    ]
+}
+```
+
+## Get Nearest `n` Events
+
+end point 
+```http
+GET /events/lasts
+```
+
+| headers  | value |
+| :---  | :--- |
+| `count`  | number of events to get |
+
+ Response example
+
+```json
+{
+    "message": "Events",
+    "data": [
+        {
+            "tags": [
+                "5ec3120a4e373533e069fea1"
+            ],
+            "_id": "5eb9d9d46f813a3970e9ad69",
+            "name": "Event B",
+            "admin": "5ec1a1ccf5114925a815ce66",
+            "start_date": "2020-05-04T23:03:00.000Z",
+            "end_date": "2020-05-28T23:03:00.000Z",
+            "description": "this is event B",
+            "location": "Sousse",
+            "createdAt": "2020-05-11T23:03:48.574Z",
+            "updatedAt": "2020-05-19T02:57:35.134Z",
+            "__v": 5
+        }
+    ]
+}
+```
+
+## Get Events by most used Tags
+
+> return a list of events divided in categories of most used tags
+
+end point 
+```http
+GET /events/categories
+```
+
+| headers  | value |
+| :---  | :--- |
+| `number_tags`  | number of Tags|
+| `number_events`  | number of events per tag |
+
+ Response example
+
+```json
+{
+    "message": "Categories",
+    "data": [
+        {
+            "tag": {
+                "count": 3,
+                "_id": "5ec3add35b3b1c001757bb19",
+                "name": "tagB",
+                "__v": 0
+            },
+            "events": [
+                {
+                    "tags": [
+                        "5ec3add05b3b1c001757bb18",
+                        "5ec3add35b3b1c001757bb19",
+                        "5ec3add65b3b1c001757bb1a",
+                        "5ec3addc5b3b1c001757bb1b",
+                        "5ec3ade45b3b1c001757bb1c"
+                    ],
+                    "_id": "5eb9d9a86f813a3970e9ad68",
+                    "name": "Event A",
+                    "admin": "5ec1a1ccf5114925a815ce66",
+                    "start_date": "2020-06-12T23:02:00.000Z",
+                    "end_date": "2020-05-19T23:03:00.000Z",
+                    "description": "this is event A",
+                    "location": "Tunis",
+                    "createdAt": "2020-05-11T23:03:04.665Z",
+                    "updatedAt": "2020-05-19T09:59:01.247Z",
+                    "__v": 81
+                }
+            ]
+        }
+    ]
+}
+```
+
+## Get Events by  Tag
+
+> return a list of events divided in categories of most used tags
+
+end point 
+```http
+GET /events/tag
+```
+
+| headers  | value |
+| :---  | :--- |
+| `tag`  | the `id` of Tag|
+
+ Response example
+
+```json
+{
+    "message": "Events retrieved Successfully",
+    "data": [
+        {
+            "tags": [
+                "5ec3add05b3b1c001757bb18"
+            ],
+            "_id": "5eb9d9a86f813a3970e9ad68",
+            "name": "Event A",
+            "admin": "5ec1a1ccf5114925a815ce66",
+            "start_date": "2020-06-12T23:02:00.000Z",
+            "end_date": "2020-05-19T23:03:00.000Z",
+            "description": "this is event A",
+            "location": "Tunis",
+            "createdAt": "2020-05-11T23:03:04.665Z",
+            "updatedAt": "2020-05-19T09:59:01.247Z",
+            "__v": 81
+        }
+    ]
+}
+
+```
+
+## Get all  Events for a specific Staff
+
+end point 
+```http
+Get /staff/events
+```
+| headers  | value |
+| :---  | :--- |
+| `user`  | the `id` of the staff |
+
+ Response example
+
+
+```json
+{
+    "events": [
+        {
+            "_id": "5eb9d9a86f813a3970e9ad68",
+            "name": "Event A",
+            "admin": "5eb9d8fd6f813a3970e9ad66",
+            "start_date": "2020-05-12T23:02:00.000Z",
+            "end_date": "2020-05-19T23:03:00.000Z",
+            "description": "this is event A",
+            "location": "Tunis",
+            "createdAt": "2020-05-11T23:03:04.665Z",
+            "updatedAt": "2020-05-11T23:03:04.665Z",
+            "__v": 0
+        }
+    ]
+}
+```
+
+## Create Event
+
+end point 
+```http
+POST /event
+```
+| headers  | value |
+| :---  | :--- |
+| `Content-Type`  | `application/json` |
+
+ body example
+
+
+```json
+{
+     "name" : "" ,
+     "admin"  : "" ,
+     "start_date" : "" ,
+     "end_date" : "" ,
+     "description" : "" ,
+     "location" : "" 
+}
+```
+
+
+The `admin` attribute contains the `id` of the user who created the event.
+
+
+# Users
+
+
+## Get all users
+
+end point.
+```http
+GET /users
+```
+Response example :
+```json
+{
+    "status": "success",
+    "message": "User retrieved successfully",
+    "data": [
+        {
+            "_id": "5eb9d8ea6f813a3970e9ad65",
+            "name": "ahmed",
+            "password": "ahmed",
+            "email": "ahmed@gmail.com",
+            "__v": 0
+        }
+        
+    ]
+}
+```
+
 # Tags
 
 ## Get All Tags
@@ -955,8 +1210,6 @@ DELETE /Event/timeslot
 | headers  | value |
 | :---  | :--- |
 | `id`  | the `id` of the TimeSlot |
-
-
 
 # Status Codes
 
