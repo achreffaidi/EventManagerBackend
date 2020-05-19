@@ -331,18 +331,23 @@ exports.addPresence = function (req, res) {
         } else {
 
 
-            User.findById(req.body.user, function (err, user) {
+            Request.findOne({user : req.body.user}, function (err, request) {
 
                 if (err) {
                     console.log(err);
                     res.send(err);
-                } else if (!user) {
+                } else if (!request) {
                     res.writeHead(404);
                     res.end("Can't Find the User .");
-                } else {
+                } else if(request.state!==2){
+                    res.status(444).json({
+                        message:"This User doesn't have a proved Ticket"
+                    });
+
+                }else {
 
                     let presence = new Presence();
-                    presence.user = user.id;
+                    presence.user = request.user;
                     presence.save(function (err) {
                         if (err) {
                             console.log(err);
@@ -362,7 +367,6 @@ exports.addPresence = function (req, res) {
                                         {
                                             message: "Presence add Successfullt",
                                             date: {
-                                                name: user.name,
                                                 event_counting: event_counting
                                             }
                                         }
