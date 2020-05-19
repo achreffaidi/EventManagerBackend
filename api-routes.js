@@ -40,7 +40,9 @@ router.route('/events')
 router.route('/events/lasts')
     .get(eventController.getLastFive)
 router.route('/events/categories')
-    .get(eventController.getEventsWithTags)
+    .get(eventController.getEventsWithTopTags)
+router.route('/events/tag')
+    .get(eventController.getEventsByTag)
 
 router.route('/events/admin')
     .get(eventController.getEventByAdmin);

@@ -312,7 +312,7 @@ exports.getLastFive = function(req,res){
     })
 }
 
-exports.getEventsWithTags = function(req,res){
+exports.getEventsWithTopTags = function(req,res){
 
     Tag.find({}).sort({count:-1}).limit(Number(req.headers.number_tags)).exec(function(err,tags){
         if(err){
@@ -343,6 +343,26 @@ exports.getEventsWithTags = function(req,res){
             }
 
 
+        }
+
+
+    });
+
+
+
+
+}
+
+exports.getEventsByTag = function(req,res){
+
+    Events.find({tags: req.headers.tag}).exec(function(err,events){
+        if(err){
+            res.send(err);
+        }else{
+            res.json({
+                message : "Events retrieved Successfully",
+                data : events
+            })
         }
 
 

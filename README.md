@@ -133,6 +133,44 @@ GET /events/categories
 }
 ```
 
+## Get Events by  Tag
+
+> return a list of events divided in categories of most used tags
+
+end point 
+```http
+GET /events/tag
+```
+
+| headers  | value |
+| :---  | :--- |
+| `tag`  | the `id` of Tag|
+
+ Response example
+
+```json
+{
+    "message": "Events retrieved Successfully",
+    "data": [
+        {
+            "tags": [
+                "5ec3add05b3b1c001757bb18"
+            ],
+            "_id": "5eb9d9a86f813a3970e9ad68",
+            "name": "Event A",
+            "admin": "5ec1a1ccf5114925a815ce66",
+            "start_date": "2020-06-12T23:02:00.000Z",
+            "end_date": "2020-05-19T23:03:00.000Z",
+            "description": "this is event A",
+            "location": "Tunis",
+            "createdAt": "2020-05-11T23:03:04.665Z",
+            "updatedAt": "2020-05-19T09:59:01.247Z",
+            "__v": 81
+        }
+    ]
+}
+```
+
 ## Get all  Events for a specific Staff
 
 end point 
