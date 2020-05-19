@@ -37,6 +37,11 @@ router.route('/users/:user_id')
 router.route('/events')
     .get(eventController.index)
     .post(eventController.new);
+router.route('/events/lasts')
+    .get(eventController.getLastFive)
+router.route('/events/categories')
+    .get(eventController.getEventsWithTags)
+
 router.route('/events/admin')
     .get(eventController.getEventByAdmin);
 

@@ -297,3 +297,58 @@ exports.getTags = function(req,res){
 
 
 }
+
+
+exports.getLastFive = function(req,res){
+
+    Events.find({start_date : {$gte: new Date()}}).sort({start_date : 1}).limit(Number(req.headers.count)).exec(function (err,events) {
+        if(err){
+          res.send(err);
+        }
+        res.json({
+            message : "Events",
+            data : events
+        })
+    })
+}
+
+exports.getEventsWithTags = function(req,res){
+
+    Tag.find({}).sort({count:-1}).limit(Number(req.headers.number_tags)).exec(function(err,tags){
+        if(err){
+            res.send(err);
+        }else{
+            let list = [];
+            let count = 0 ;
+            for(let i = 0 ; i<tags.length;i++){
+                Events.find({tags:tags[i].id}).limit(Number(req.headers.number_events)).exec(function(err,events){
+                   if(err){
+                       res.send(err);
+                   }else{
+                       list.push({
+                          tag : tags[i] ,
+                          events : events
+                       });
+                       count++;
+                       if(count === tags.length){
+                           res.json({
+                               message : "Categories",
+                               data : list
+                           })
+                       }
+                   }
+
+
+                });
+            }
+
+
+        }
+
+
+    });
+
+
+
+
+}
