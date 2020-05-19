@@ -15,6 +15,17 @@ https://event-manager-red.herokuapp.com/api
 
 # Using Guide 
 
+# Authentication
+
+
+* The verification is done by a middleware function `verifyToken` located in the `UserController.js` file.
+* The authentication is not required for all requests now but it will be soon.
+* User should attach the `token` to the headers of each request.
+  
+| headers  | value |
+| :---  | :--- |
+| `x-access-token`  | the token |
+
 # Event
 
 ## Get All Events
@@ -169,6 +180,7 @@ GET /events/tag
         }
     ]
 }
+
 ```
 
 ## Get all  Events for a specific Staff
