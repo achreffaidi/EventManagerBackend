@@ -12,10 +12,19 @@ exports.index =    function (req, res) {
                 message: err,
             });
         }else{
-            var list = [];
-            let count = 0 ;
+            res.json({
+                message: 'Events Received !',
+                data: events
+            });
+        }
 
-            for(let i = 0  ; i<events.length ;i++){
+    });
+};
+
+
+//Get Event owner
+ /*
+  for(let i = 0  ; i<events.length ;i++){
                User.findById(events[i].admin,function(err,user){
                    if(err||!user){
                        res.status(404);
@@ -49,21 +58,7 @@ exports.index =    function (req, res) {
 
 
             }
-
-
-
-
-
-        }
-
-
-
-
-
-
-    });
-};
-
+  */
 exports.getEventByAdmin =    function (req, res) {
     Events.find({admin:req.headers.user},function (err, events) {
         if (err) {
@@ -106,7 +101,7 @@ exports.new = function (req, res) {
     });
 };
 exports.view = function (req, res) {
-    Events.findById(req.params.Events_id, function (err, events) {
+    Events.findById(req.params.event_id, function (err, events) {
         if (err)
             res.send(err);
         res.json({

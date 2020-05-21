@@ -17,6 +17,7 @@ var staffController = require('./Controllers/StaffController');
 var eventCountingController = require('./Controllers/EventCountingController')
 var timeSlotController = require('./Controllers/TimeSlotController')
 var tagController = require('./Controllers/tagsController')
+var searchController = require('./Controllers/SearchController')
 
 //userController.verifyToken
 //userController.verifyAdmin,
@@ -32,6 +33,10 @@ router.route('/login/admin')
 
 router.route('/users/:user_id')
     .get(userController.view)
+
+
+router.route('/search')
+    .get(searchController.suggestions);
 
 
 router.route('/events')

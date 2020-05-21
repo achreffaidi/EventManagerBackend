@@ -21,7 +21,6 @@ exports.index = function (req, res) {
 };
 
 
-//TODO add tests if the event doesn't exist !!  => same with all other functions !
 exports.new = function (req, res) {
 
     console.log(req.body);
@@ -136,17 +135,18 @@ exports.getStaffByEvent = function (req,res) {
 exports.getPermissions = function (req,res) {
 
     let permissions = [
-        "permission 1",
-        "permission 2",
-        "permission 3",
-        "permission 4",
-        "permission 5",
+        "Can Scan Presence",
+        "Can set To Unpaid",
+        "Can Set To Paid",
+        "Can remove Request",
+        "Can go backward",
     ]
     res.json({
         "permissions": permissions
     })
 
 }
+
 
 
 exports.getEventsByStaff = function (req,res) {
