@@ -101,7 +101,7 @@ exports.new = function (req, res) {
     });
 };
 exports.view = function (req, res) {
-    Events.findById(req.params.Events_id, function (err, events) {
+    Events.findById(req.params.event_id, function (err, events) {
         if (err)
             res.send(err);
         res.json({
