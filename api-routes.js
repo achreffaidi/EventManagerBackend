@@ -18,6 +18,7 @@ var eventCountingController = require('./Controllers/EventCountingController')
 var timeSlotController = require('./Controllers/TimeSlotController')
 var tagController = require('./Controllers/tagsController')
 var searchController = require('./Controllers/SearchController')
+var socialMediaController = require('./Controllers/SocialMediaController')
 
 //userController.verifyToken
 //userController.verifyAdmin,
@@ -137,6 +138,15 @@ router.route('/Event/timeslot')
 router.route('/Event/timeslot')
     .delete(timeSlotController.delete)
 
+
+router.route('/Event/sociallinks')
+    .get(socialMediaController.getLinks)
+    .post(socialMediaController.createLink)
+    .put(socialMediaController.updateLink)
+    .delete(socialMediaController.deleteLink)
+
+router.route('/sociallinks')
+    .get(socialMediaController.getwebsites)
 
 
 // Export API routes
