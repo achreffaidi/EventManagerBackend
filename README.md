@@ -242,7 +242,6 @@ POST /event
 
 The `admin` attribute contains the `id` of the user who created the event.
 
-
 # Users
 
 
@@ -388,6 +387,125 @@ DELETE /event/tags
 The `event` attribute contains the `id` of the event.
 The `tag` attribute contains the `id` of the tag.
 
+# SocialMediaLinks ( Event )
+
+## Get all  possible websites 
+
+end point 
+```http
+GET /sociallinks
+```
+
+
+ Response example
+
+
+```json
+{
+    "message": "List Links",
+    "data": [
+        "Facebook",
+        "Youtube",
+        "LinkedIn",
+        "Instagram",
+        "WhatsApp"
+    ]
+}
+```
+
+## Get all  Social Links for an Event
+
+end point 
+```http
+Get /event/sociallinks
+```
+| headers  | value |
+| :---  | :--- |
+| `event`  | the `id` of the event |
+
+ Response example
+
+
+```json
+{
+    "social_media_links": [
+        {
+            "_id": "5ec7a52c87ae4c43ac26cb59",
+            "title": "Event",
+            "event": "5eb9d9a86f813a3970e9ad68",
+            "link": "facebook.com",
+            "website": "facebook",
+            "__v": 0
+        }
+    ]
+}
+```
+
+
+## Create Social Link
+
+end point 
+```http
+POST /event/sociallinks
+```
+| headers  | value |
+| :---  | :--- |
+| `Content-Type`  | `application/json` |
+
+ body example
+
+
+```json
+{
+      "title":"Event",
+      "event":"5eb9d9a86f813a3970e9ad68" ,
+      "url":"facebook.com/achref.faidi",
+      "website": "facebook"
+    }
+```
+
+
+The `event` attribute contains the `id` of the event .
+
+The `website` attribute contains the name of social media website , like `facebook` or `instagram` , this name will be used to get the correct icon for the socail media button . 
+
+## update Social Link
+
+end point 
+```http
+PUT /event/sociallinks
+```
+| headers  | value |
+| :---  | :--- |
+| `Content-Type`  | `application/json` |
+
+ body example
+
+
+```json
+{
+      "id": "",
+      "title":"Event",
+      "event":"5eb9d9a86f813a3970e9ad68" ,
+      "url":"facebook.com/achref.faidi",
+      "website": "facebook"
+    }
+```
+
+The `id` attribute contains the `id` of the SocialMedia Link object .
+
+The `event` attribute contains the `id` of the event .
+
+## Delete Socail link
+
+end point 
+```http
+DELETE /event/sociallinks
+```
+| headers  | value |
+| :---  | :--- |
+| `id`  | the `id` of the Social Link |
+
 # Plan ( Offer )
 
 ## Get all  Plans for an Event
@@ -490,7 +608,6 @@ DELETE /plan
 | headers  | value |
 | :---  | :--- |
 | `id`  | the `id` of the Plan |
-
 
 # Users
 
@@ -642,7 +759,6 @@ DELETE /plan
 | headers  | value |
 | :---  | :--- |
 | `id`  | the `id` of the Plan |
-
 
 # Staff 
 
@@ -797,7 +913,6 @@ GET /event/staff/permissions
     ]
 }
 ```
-
 
 # Requests 
 
