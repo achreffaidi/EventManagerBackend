@@ -21,6 +21,10 @@ const eventModel = mongoose.Schema({
     end_date : {
         type : Date
     } ,
+    imageLink : {
+        type : String ,
+        default : null
+    },
     tags : {
         type : [mongoose.Schema.Types.ObjectId] ,
         default : []
