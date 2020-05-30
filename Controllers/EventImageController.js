@@ -2,10 +2,10 @@
 Events = require('../Models/eventsModel');
 EventImages = require('../Models/eventImageModel');
 const formidable = require('formidable');
+var azure = require('azure-storage');
+var blobService = azure.createBlobService("eventmanagingapp", "ItSS4CnnBzcB+NPsK8eJPu5f7eHHfR+kSv14aIpksDGvcl/IzhvCXxXh+LpKzqbGt25z7XkTWY+DWDvszh1yrA==");
 var fs = require('fs');
 var path = require('path');
-
-
 
 exports.new = function (req, res) {
 
@@ -21,32 +21,33 @@ exports.new = function (req, res) {
             next(err);
             return;
         }
-         console.log(files.image.path);
+        console.log(files.image.path);
+        var date = new Date();
+        var timestamp = date.getTime();
 
-        EventImages.findOne({'event':req.headers.event} , function (err, result) {
-            var eventImages = result ;
-            if (err)
-                res.send(err);
+        blobService.createBlockBlobFromLocalFile('images', timestamp.toString(), files.image.path, function(error, result, response) {
+            console.log(result);
+            console.log(response);
 
+            if (!error) {
+                // file uploaded
+                Events.findById(req.headers.event, function(err, event){
+                   if(err){
+                       res.send(err);
+                   }else if (!event){
 
-            console.log(eventImages);
-            if(!eventImages){
-                eventImages = new EventImages();
-                eventImages.event = req.headers.event;
+                   } else{
+                       event.imageLink = "https://eventmanagingapp.blob.core.windows.net/images/"+timestamp.toString();
+                       event.save(function (err) {
+                            if(err){
+                               res.send(err);
+                            }else{
+                                res.send(event.imageLink)
+                            }
+                       })
+                   }
+                });
             }
-
-
-            eventImages.img = files.image.path ;
-            eventImages.save(function (err) {
-                if (err)
-                    res.json(err);
-                else
-                    res.json({
-                        message: 'Image uploaded!',
-                        data: eventImages
-                    });
-            });
-
 
         });
 
@@ -78,25 +79,25 @@ exports.view = function (req, response) {
 
         var contentType = 'image/png';
         if(eventImage!=null)
-        fs.readFile(eventImage.img, function(error, content) {
-            if (error) {
-                if(error.code == 'ENOENT'){
-                    fs.readFile('./404.html', function(error, content) {
-                        response.writeHead(200, { 'Content-Type': contentType });
-                        response.end(content, 'utf-8');
-                    });
+            fs.readFile(eventImage.img, function(error, content) {
+                if (error) {
+                    if(error.code == 'ENOENT'){
+                        fs.readFile('./404.html', function(error, content) {
+                            response.writeHead(200, { 'Content-Type': contentType });
+                            response.end(content, 'utf-8');
+                        });
+                    }
+                    else {
+                        response.writeHead(500);
+                        response.end('Sorry, check with the site admin for error: '+error.code+' ..\n');
+                        response.end();
+                    }
                 }
                 else {
-                    response.writeHead(500);
-                    response.end('Sorry, check with the site admin for error: '+error.code+' ..\n');
-                    response.end();
+                    response.writeHead(200, { 'Content-Type': contentType });
+                    response.end(content, 'utf-8');
                 }
-            }
-            else {
-                response.writeHead(200, { 'Content-Type': contentType });
-                response.end(content, 'utf-8');
-            }
-        });
+            });
 
 
     });

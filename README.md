@@ -42,15 +42,22 @@ GET /event
     "status": "success",
     "message": "Events retrieved successfully",
     "data": [
-        {
-            "id": "5eb9d9a86f813a3970e9ad68",
-            "name": "Event A",
-            "admin": "achref",
-            "description": "this is event A",
-            "location": "Tunis",
-            "start_date": "2020-05-12T23:02:00.000Z",
-            "end_date": "2020-05-19T23:03:00.000Z"
-        }
+            {
+                "imageLink": "https://eventmanagingapp.blob.core.windows.net/images/1590801587942",
+                "tags": [
+                    "5ec3c999af4e6d0017aa503b"
+                ],
+                "_id": "5eb9d9a86f813a3970e9ad68",
+                "name": "Event A",
+                "admin": "5ec1a1ccf5114925a815ce66",
+                "start_date": "2020-06-12T23:02:00.000Z",
+                "end_date": "2020-05-19T23:03:00.000Z",
+                "description": "this is event A",
+                "location": "Tunis",
+                "createdAt": "2020-05-11T23:03:04.665Z",
+                "updatedAt": "2020-05-30T01:19:48.252Z",
+                "__v": 98
+            }
     ]
 }
 ```
@@ -73,21 +80,21 @@ GET /events/lasts
     "message": "Events",
     "data": [
         {
-            "tags": [
-                "5ec3120a4e373533e069fea1"
-            ],
-            "_id": "5eb9d9d46f813a3970e9ad69",
-            "name": "Event B",
-            "admin": "5ec1a1ccf5114925a815ce66",
-            "start_date": "2020-05-04T23:03:00.000Z",
-            "end_date": "2020-05-28T23:03:00.000Z",
-            "description": "this is event B",
-            "location": "Sousse",
-            "createdAt": "2020-05-11T23:03:48.574Z",
-            "updatedAt": "2020-05-19T02:57:35.134Z",
-            "__v": 5
-        }
-    ]
+                        "imageLink": "https://eventmanagingapp.blob.core.windows.net/images/1590801587942",
+                        "tags": [
+                            "5ec3c999af4e6d0017aa503b"
+                        ],
+                        "_id": "5eb9d9a86f813a3970e9ad68",
+                        "name": "Event A",
+                        "admin": "5ec1a1ccf5114925a815ce66",
+                        "start_date": "2020-06-12T23:02:00.000Z",
+                        "end_date": "2020-05-19T23:03:00.000Z",
+                        "description": "this is event A",
+                        "location": "Tunis",
+                        "createdAt": "2020-05-11T23:03:04.665Z",
+                        "updatedAt": "2020-05-30T01:19:48.252Z",
+                        "__v": 98
+                    }
 }
 ```
 
@@ -120,24 +127,21 @@ GET /events/categories
             },
             "events": [
                 {
-                    "tags": [
-                        "5ec3add05b3b1c001757bb18",
-                        "5ec3add35b3b1c001757bb19",
-                        "5ec3add65b3b1c001757bb1a",
-                        "5ec3addc5b3b1c001757bb1b",
-                        "5ec3ade45b3b1c001757bb1c"
-                    ],
-                    "_id": "5eb9d9a86f813a3970e9ad68",
-                    "name": "Event A",
-                    "admin": "5ec1a1ccf5114925a815ce66",
-                    "start_date": "2020-06-12T23:02:00.000Z",
-                    "end_date": "2020-05-19T23:03:00.000Z",
-                    "description": "this is event A",
-                    "location": "Tunis",
-                    "createdAt": "2020-05-11T23:03:04.665Z",
-                    "updatedAt": "2020-05-19T09:59:01.247Z",
-                    "__v": 81
-                }
+                                "imageLink": "https://eventmanagingapp.blob.core.windows.net/images/1590801587942",
+                                "tags": [
+                                    "5ec3c999af4e6d0017aa503b"
+                                ],
+                                "_id": "5eb9d9a86f813a3970e9ad68",
+                                "name": "Event A",
+                                "admin": "5ec1a1ccf5114925a815ce66",
+                                "start_date": "2020-06-12T23:02:00.000Z",
+                                "end_date": "2020-05-19T23:03:00.000Z",
+                                "description": "this is event A",
+                                "location": "Tunis",
+                                "createdAt": "2020-05-11T23:03:04.665Z",
+                                "updatedAt": "2020-05-30T01:19:48.252Z",
+                                "__v": 98
+                            }
             ]
         }
     ]
@@ -164,20 +168,21 @@ GET /events/tag
     "message": "Events retrieved Successfully",
     "data": [
         {
-            "tags": [
-                "5ec3add05b3b1c001757bb18"
-            ],
-            "_id": "5eb9d9a86f813a3970e9ad68",
-            "name": "Event A",
-            "admin": "5ec1a1ccf5114925a815ce66",
-            "start_date": "2020-06-12T23:02:00.000Z",
-            "end_date": "2020-05-19T23:03:00.000Z",
-            "description": "this is event A",
-            "location": "Tunis",
-            "createdAt": "2020-05-11T23:03:04.665Z",
-            "updatedAt": "2020-05-19T09:59:01.247Z",
-            "__v": 81
-        }
+                        "imageLink": "https://eventmanagingapp.blob.core.windows.net/images/1590801587942",
+                        "tags": [
+                            "5ec3c999af4e6d0017aa503b"
+                        ],
+                        "_id": "5eb9d9a86f813a3970e9ad68",
+                        "name": "Event A",
+                        "admin": "5ec1a1ccf5114925a815ce66",
+                        "start_date": "2020-06-12T23:02:00.000Z",
+                        "end_date": "2020-05-19T23:03:00.000Z",
+                        "description": "this is event A",
+                        "location": "Tunis",
+                        "createdAt": "2020-05-11T23:03:04.665Z",
+                        "updatedAt": "2020-05-30T01:19:48.252Z",
+                        "__v": 98
+                    }
     ]
 }
 
@@ -200,17 +205,21 @@ Get /staff/events
 {
     "events": [
         {
-            "_id": "5eb9d9a86f813a3970e9ad68",
-            "name": "Event A",
-            "admin": "5eb9d8fd6f813a3970e9ad66",
-            "start_date": "2020-05-12T23:02:00.000Z",
-            "end_date": "2020-05-19T23:03:00.000Z",
-            "description": "this is event A",
-            "location": "Tunis",
-            "createdAt": "2020-05-11T23:03:04.665Z",
-            "updatedAt": "2020-05-11T23:03:04.665Z",
-            "__v": 0
-        }
+                        "imageLink": "https://eventmanagingapp.blob.core.windows.net/images/1590801587942",
+                        "tags": [
+                            "5ec3c999af4e6d0017aa503b"
+                        ],
+                        "_id": "5eb9d9a86f813a3970e9ad68",
+                        "name": "Event A",
+                        "admin": "5ec1a1ccf5114925a815ce66",
+                        "start_date": "2020-06-12T23:02:00.000Z",
+                        "end_date": "2020-05-19T23:03:00.000Z",
+                        "description": "this is event A",
+                        "location": "Tunis",
+                        "createdAt": "2020-05-11T23:03:04.665Z",
+                        "updatedAt": "2020-05-30T01:19:48.252Z",
+                        "__v": 98
+                    }
     ]
 }
 ```
